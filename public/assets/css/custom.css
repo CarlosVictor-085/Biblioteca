@@ -1,0 +1,31 @@
+:root {
+    --bs-primary: #0B4E92;
+}
+
+/* Sobrescrevendo a cor primary em todas as classes Bootstrap */
+
+.bg-primary {
+    background-color: #0B4E92 !important;
+}
+
+.border-primary {
+    border-color: #0B4E92 !important;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #0B4E92;
+    border-color: #0B4E92;
+}
+
+.menu-item.active {
+    color: #0B4E92 !important;
+ 
+}
+
+

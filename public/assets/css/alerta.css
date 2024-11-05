@@ -1,0 +1,28 @@
+/* Contêiner do alerta no canto superior direito */
+.alert-container {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 320px;
+    z-index: 1055;
+}
+
+/* Estilos para o alerta customizado */
+.custom-alert {
+    margin-bottom: 10px;
+    color: #080808;
+    opacity: 0.95;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    font-size: 1.1em; /* Aumenta o tamanho do texto */
+    border-radius: 8px;
+}
+
+/* Estilo para a imagem do alerta */
+.alert-image {
+    width: 40px; /* Ajuste o tamanho da imagem conforme necessário */
+    height: auto; /* Mantém a proporção da imagem */
+    vertical-align: middle; /* Alinha verticalmente a imagem com o texto */
+    margin-right: 10px; /* Espaço entre a imagem e o texto */
+    display: inline-block; /* Garante que a imagem e o texto fiquem na mesma linha */
+}

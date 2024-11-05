@@ -1,0 +1,12 @@
+td.id-column {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px; /* Aumenta a largura máxima para o ID */
+    padding-left: 20px; /* Adiciona espaçamento à esquerda, ajustado para a seta de responsividade */
+    text-align: center; /* Centraliza o conteúdo */
+}
+
+.carousel-item {
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Ajusta a suavidade da transição */
+}
