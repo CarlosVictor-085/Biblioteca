@@ -1,3 +1,5 @@
-writable/logs/*
-writable/session/
+writable/logs/*
+
+writable/session/*
+
 html/
