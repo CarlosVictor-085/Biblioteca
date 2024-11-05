@@ -1,103 +1,54 @@
 <div class="container">
-
     <h2>Obra</h2>
-
     <!-- Button do Modal -->
-
     <button type="button" class="btn btn-primary d-grid" data-bs-toggle="modal" data-bs-target="#exampleModal">
-
         Novo
-
     </button>
-
     <br>
-
     <!-- Tabela de Usuario -->
-
     <div class="card shadow mb-4">
-
         <div class="card-body">
-
             <table id="table" class="table table-responsive display responsive">
-
                 <thead>
-
                     <tr>
-
                         <td class="text-center">ID</td>
-
                         <td class="text-center">TÍTULO</td>
-
                         <td class="text-center">CATEGORIA</td>
-
                         <td class="text-center">ANO</td>
-
                         <td class="text-center">ISBN</td>
-
                         <td class="text-center">EDITORA</td>
-
                         <td class="text-center">QUANTIDADE</td>
-
                         <td class="text-center">AÇÕES</td> <!-- Coluna para ações -->
-
                     </tr>
-
                 </thead>
-
                 <tbody>
-
                     <?php foreach ($listaObra as $ob) : ?>
-
                     <tr>
-
                         <td class="text-center"><?= $ob['id'] ?></td>
-
                         <td class="text-center"><?= $ob['titulo'] ?></td>
-
                         <td class="text-center"><?= $ob['categoria'] ?></td>
-
                         <td class="text-center"><?= $ob['ano_publicacao'] ?></td>
-
                         <td class="text-center"><?= $ob['isbn'] ?></td>
-
                         <td class="text-center"><?= $ob['nome'] ?></td>
-
                         <td class="text-center"><?= $ob['quantidade'] ?></td>
-
                         <td class="text-center">
-
                             <div class="dropdown">
-
                                 <a class="text-primary" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
                                     <i class='bx bx-dots-vertical-rounded'></i>
-
                                 </a>
-
                                 <ul class="dropdown-menu">
-
                                     <li>
-
                                         <a class="dropdown-item text-info"
                                             href="<?= base_url('Obra/editar/' . $ob['id']) ?>">
-
                                             <i class="fas fa-pen"></i> Editar
-
                                         </a>
-
                                     </li>
-
                                     <li>
-
                                         <a class="dropdown-item text-danger delete-link" data-id="<?= $ob['id'] ?>"
                                             href="#">
-
                                             <i class="fas fa-trash"></i> Excluir
-
                                         </a>
-
                                     </li>
-
                                     <li>
                                         <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal"
                                             data-bs-target="#modalAutores" data-id="<?= $ob['id'] ?>"
@@ -106,36 +57,21 @@
                                             <i class="fas fa-info-circle"></i> Detalhes sobre o Autor
                                         </a>
                                     </li>
-
                                     <li>
                                         <a class="dropdown-item text-primary"
                                             href="<?= base_url('Obra/gerarRelatorioPDF') ?>" target="_blank">
                                             <i class="fas fa-file-pdf"></i> Gerar Relatório em PDF
                                         </a>
                                     </li>
-
-
                                 </ul>
-
                             </div>
-
                         </td>
                     </tr>
-
                     <?php endforeach ?>
-
                 </tbody>
-
             </table>
-
         </div>
-
     </div>
-
-
-
-
-
     <!-- Modal -->
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
