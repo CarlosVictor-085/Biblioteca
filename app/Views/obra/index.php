@@ -57,12 +57,6 @@
                                             <i class="fas fa-info-circle"></i> Detalhes sobre o Autor
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item text-primary"
-                                            href="<?= base_url('Obra/gerarRelatorioPDF') ?>" target="_blank">
-                                            <i class="fas fa-file-pdf"></i> Gerar Relatório em PDF
-                                        </a>
-                                    </li>
                                 </ul>
                             </div>
                         </td>
@@ -72,6 +66,11 @@
             </table>
         </div>
     </div>
+    <div class="text-end mt-3">
+        <a href='<?= base_url('Obra/gerarRelatorioPDF') ?>' class="btn btn-primary" target="_blank">Gerar Relatório
+            de Todas as Obras</a>
+    </div>
+
     <!-- Modal -->
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
