@@ -66,10 +66,6 @@
             </table>
         </div>
     </div>
-    <div class="text-end mt-3">
-        <a href='<?= base_url('Obra/gerarRelatorioPDF') ?>' class="btn btn-primary" target="_blank">Gerar Relatório
-            de Todas as Obras</a>
-    </div>
 
     <!-- Modal -->
 

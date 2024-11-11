@@ -162,64 +162,69 @@ class Aluno extends BaseController
 
         // Adiciona informações do aluno
         $aluno = $this->alunoModel->find($id);
-        $pdf->SetFont('helvetica', '', 12);
+        $pdf->SetFont('helvetica', 'B', 13);
         $pdf->Cell(0, 8, 'Aluno: ' . htmlspecialchars($aluno['nome']), 0, 1, 'L');
         $pdf->Ln(5); // Espaço
 
-        // Exibe o total de empréstimos
-        $pdf->SetFont('helvetica', 'B', 12);
-        $pdf->Cell(0, 8, 'Total de Empréstimos: ' . $totalEmprestimos, 0, 1, 'L');
-        $pdf->Ln(5); // Espaço
+        // Verificar se o aluno possui empréstimos
+        if (empty($emprestimos)) {
+            // Se não houver empréstimos, exibe "Nada consta"
+            $pdf->SetFont('helvetica', 'I', 12);
+            $pdf->Cell(0, 8, 'Nada consta: Este aluno não possui empréstimos registrados.', 0, 1, 'L');
+        } else {
 
-        // Exibe os empréstimos
-        $pdf->SetFont('helvetica', 'B', 12);
-        $pdf->Cell(0, 8, 'Empréstimos Realizados:', 0, 1, 'L');
-        $pdf->Ln(5); // Espaço
+            // Exibe o total de empréstimos
+            $pdf->SetFont('helvetica', '', 12);
+            $pdf->Cell(0, 8, 'Total de Empréstimos: ' . $totalEmprestimos, 0, 1, 'L');
+            $pdf->Ln(5); // Espaço
+            // Caso contrário, exibe os empréstimos
+            $pdf->SetFont('helvetica', '', 12);
+            $pdf->Cell(0, 8, 'Empréstimos Realizados:', 0, 1, 'L');
+            $pdf->Ln(5); // Espaço
 
-        // Adiciona a tabela dos empréstimos
-        $pdf->SetFont('helvetica', '', 10);
+            // Adiciona a tabela dos empréstimos
+            $pdf->SetFont('helvetica', '', 10);
 
-        // Cabeçalho da tabela
-        $html = '
-    <table border="1" cellpadding="5">
-    <tr>
-        <th>Data Início</th>
-        <th>Data Prazo</th>
-        <th>Data Fim</th>
-        <th>Nome Obra</th>
-        <th>Tombo</th>
-        <th>Nome Usuário</th>
-    </tr>';
+            // Cabeçalho da tabela
+            $html = '
+        <table border="1" cellpadding="5">
+            <tr style="background-color: #cccccc;">
+                <th>Nome Obra</th>
+                <th>Tombo</th>
+                <th>Data Início</th>
+                <th>Data Prazo</th>
+                <th>Data Entrega</th>
+                <th>Nome Usuário</th>
+            </tr>';
 
-        // Preenche os dados dos empréstimos
-        foreach ($emprestimos as $emprestimo) {
-            $data_inicio = strtotime($emprestimo['data_inicio']); // Convertendo para timestamp
-            $prazo = $emprestimo['data_prazo'] * 24 * 60 * 60; // Convertendo o prazo de dias para segundos
+            // Preenche os dados dos empréstimos
+            // Preenche os dados dos empréstimos
+            foreach ($emprestimos as $emprestimo) {
+                // Cálculo da data de fim com base na data de início e no prazo
+                $timestamp_inicio = strtotime($emprestimo['data_inicio']);
+                $prazo_em_segundos = $emprestimo['data_prazo'] * 24 * 60 * 60;
+                $timestamp_fim = $timestamp_inicio + $prazo_em_segundos;
+                $data_fim_formatada = is_null($emprestimo['data_fim'])
+                    ? 'Livro não devolvido'
+                    : date('d/m/Y', $timestamp_fim);
 
-            $timestamp_prazo = $data_inicio + $prazo;
+                // Preenche a linha da tabela com as informações do empréstimo
+                $html .= '
+            <tr>
+            <td>' . htmlspecialchars($emprestimo['nome_obra']) . '</td>
+            <td>' . htmlspecialchars($emprestimo['tombo']) . '</td>
+                <td>' . date('d/m/Y', $timestamp_inicio) . '</td>
+                <td>' . date('d/m/Y', $timestamp_fim) . '</td>
+                <td>' . $data_fim_formatada . '</td>
+                <td>' . htmlspecialchars($emprestimo['nome_usuario']) . '</td>
+            </tr>';
+            }
 
-            // Formatando a data de prazo
-            $data_prazo_formatada = date('d/m/Y', $timestamp_prazo);
+            $html .= '</table>';
 
-            // Verificando a data de fim
-            $data_fim = is_null($emprestimo['data_fim']) ? 'Livro não devolvido' : date('d/m/Y', strtotime($emprestimo['data_fim']));
-
-            // Adicionando linha na tabela
-            $html .= '
-    <tr>
-        <td>' . date('d/m/Y', $data_inicio) . '</td>
-        <td>' . $data_prazo_formatada . '</td>
-        <td>' . $data_fim . '</td>
-        <td>' . htmlspecialchars($emprestimo['nome_obra']) . '</td>
-        <td>' . htmlspecialchars($emprestimo['tombo']) . '</td>
-        <td>' . htmlspecialchars($emprestimo['nome_usuario']) . '</td>
-    </tr>';
+            // Escreve o conteúdo no PDF
+            $pdf->writeHTML($html, true, false, true, false, '');
         }
-
-        $html .= '</table>';
-
-        // Escreve o conteúdo no PDF
-        $pdf->writeHTML($html, true, false, true, false, '');
 
         // Definir cabeçalhos para o navegador reconhecer o PDF
         header('Content-Type: application/pdf');
@@ -228,8 +233,7 @@ class Aluno extends BaseController
         header('Pragma: public');
 
         // Saída do PDF
-        $pdf->Output("relatorio_emprestimos_aluno_{$aluno['nome']}.pdf", 'I');
-
+        $pdf->Output('relatorio_emprestimos_aluno.pdf', 'I');
 
         // Finaliza a execução para evitar que algum conteúdo seja anexado após o PDF
         exit;

@@ -137,53 +137,48 @@
         </div>
 
     </div>
+    <!-- Modal De Exclusao De Aluno-->
 
-    <div class="text-end mt-3">
-        <a href="<?= base_url('Aluno/gerarRelatorioPDF/' . $aluno['id']) ?>" class="btn btn-primary float-end"
-            target="_blank">Empréstimo do
-            Aluno</a>
-    </div>
-</div>
-<!-- Modal De Exclusao De Aluno-->
+    <?= form_open('Aluno/excluir') ?>
 
-<?= form_open('Aluno/excluir') ?>
+    <input value='<?= $aluno['id'] ?>' class='form-control' type="hidden" id='id' name='id'>
 
-<input value='<?= $aluno['id'] ?>' class='form-control' type="hidden" id='id' name='id'>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
 
-    <div class="modal-dialog">
+            <div class="modal-content">
 
-        <div class="modal-content">
+                <div class="modal-header">
 
-            <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir</h1>
 
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-            </div>
+                <div class="modal-body">
 
-            <div class="modal-body">
+                    Você tem certeza que deseja excluir: <br>ID: <?= $aluno['id'] ?><br>CPF:
 
-                Você tem certeza que deseja excluir: <br>ID: <?= $aluno['id'] ?><br>CPF:
+                    <?= $aluno['cpf'] ?><br>Nome:
 
-                <?= $aluno['cpf'] ?><br>Nome:
+                    <?= $aluno['nome'] ?><br>Email: <?= $aluno['email'] ?><br>Telefone:
+                    <?= $aluno['telefone'] ?><br>
 
-                <?= $aluno['nome'] ?><br>Email: <?= $aluno['email'] ?><br>Telefone:
-                <?= $aluno['telefone'] ?><br>
+                    Turma:
 
-                Turma:
+                    <?= $aluno['turma'] ?>
 
-                <?= $aluno['turma'] ?>
+                </div>
 
-            </div>
+                <div class="modal-footer">
 
-            <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
 
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-outline-danger">Excluir</button>
 
-                <button type="submit" class="btn btn-outline-danger">Excluir</button>
+                </div>
 
             </div>
 
@@ -191,16 +186,14 @@
 
     </div>
 
-</div>
 
 
+    <script>
+    // Desabilita a interação do usuário
 
-<script>
-// Desabilita a interação do usuário
+    document.getElementById('cpf').addEventListener('mousedown', function(event) {
 
-document.getElementById('cpf').addEventListener('mousedown', function(event) {
+        event.preventDefault(); // Impede a interação
 
-    event.preventDefault(); // Impede a interação
-
-});
-</script>
+    });
+    </script>
