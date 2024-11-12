@@ -228,10 +228,11 @@ class Obra extends BaseController
         if (ob_get_length()) ob_end_clean();
         // Recupera todos os dados de obra com as junções necessárias
         $obra = $this->obraModel
-            ->select('obra.id, obra.titulo, obra.categoria, obra.ano_publicacao, obra.isbn, obra.quantidade, editora.nome as editora')
-            ->join('editora', 'obra.id_editora = editora.id')
-            ->findAll();
-
+        ->select('obra.id, obra.titulo, obra.categoria, obra.ano_publicacao, obra.isbn, obra.quantidade, editora.nome as editora, livro.tombo')
+        ->join('editora', 'obra.id_editora = editora.id')
+        ->join('livro', 'livro.id_obra = obra.id')  // Aqui é onde você especifica a relação entre `livro` e `obra`
+        ->findAll();
+    
         // Conta o número total de obras
         $totalObras = count($obra);
     
@@ -263,8 +264,9 @@ class Obra extends BaseController
             <table border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr style="background-color: #cccccc;">
+                        <th>Tombo</th>
                         <th>Título</th>
-                        <th >Categoria</th>
+                        <th>Categoria</th>
                         <th>Ano</th>
                         <th>ISBN</th>
                         <th>Quantidade</th>
@@ -278,6 +280,7 @@ class Obra extends BaseController
         foreach ($obra as $ob) {
             $html .= '
                     <tr>
+                        <td>' . htmlspecialchars($ob['tombo']) . '</td>
                         <td>' . htmlspecialchars($ob['titulo']) . '</td>
                         <td>' . htmlspecialchars($ob['categoria']) . '</td>
                         <td>' . htmlspecialchars($ob['ano_publicacao']) . '</td>
