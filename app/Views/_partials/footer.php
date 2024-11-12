@@ -1,21 +1,17 @@
+        <!-- ************************************************ -->
+        <!-- *               Marca d'Água:                  -->
+        <!-- *    Copyright (c) 2024. Todos os direitos      -->
+        <!-- *    reservados. Não remova esta marca!         -->
+        <!-- ************************************************ -->
         <div class="position-relative mt-auto">
-
             <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-
                 <div class="mb-2 mb-md-0">
-
                     @
-
                     <a class="footer-link fw-bolder" href="">
-
                         SEPLAG - CCTI | CARLOS VICTOR</a>
-
                     2024
-
                 </div>
-
             </div>
-
         </div>
 
         <script>

@@ -149,34 +149,16 @@
                     </a>
 
                 </li>
+                <li class="menu-item">
 
-                <li class="menu-item" id="meuMenuItem">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <a href="<?= base_url('Relatorio') ?>" class="menu-link">
+
                         <i class="menu-icon tf-icons fas fa-file-pdf"></i>
-                        <div data-i18n="Relatorios">Relatorios
-                        </div>
+
+                        <div data-i18n="Analytics">Relatorios</div>
+
                     </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a class="menu-link" href="<?= base_url('Emprestimo/relatorioPendencias')?>"
-                                target="_blank">
-                                <div data-i18n="Basic">Relatório de Empréstimos Nao
-                                    Devolvidos
-                                </div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="<?= base_url('Obra/gerarRelatorioPDF') ?>" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Relatório
-                                    de Todas as Obras</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
-                                <div data-i18n="Basic">Forgot Password</div>
-                            </a>
-                        </li>
-                    </ul>
+
                 </li>
             </ul>
 
