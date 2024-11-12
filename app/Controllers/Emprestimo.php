@@ -126,12 +126,13 @@ class Emprestimo extends BaseController
 
     public function devolucao($id)
     {
+        $status = LivroModel::STATUSLIVRO;
         $emprestimo = $this->EmprestimoModel->find($id);
         $dadosobra = $this->obraModel->findAll();
         $livro = $this->livroModel->findAll();
         echo view('_partials/header');
         echo view('_partials/navbar');
-        echo view('devolucao/index.php', ['emprestimo' => $emprestimo, 'listaLivro' => $livro, 'listaObra' => $dadosobra]);
+        echo view('devolucao/index.php', ['emprestimo' => $emprestimo, 'Livro' => $livro, 'listaObra' => $dadosobra, 'status' => $status]);
         echo view('_partials/footer');
     }
 
@@ -165,9 +166,11 @@ class Emprestimo extends BaseController
     public function salvardev()
     {
         $dados = $this->request->getPost();
+        //dd($dados);
         // Tenta salvar a devolução
         if ($this->EmprestimoModel->save($dados)) {
             $this->livroModel->update($dados['id_livro'], ['disponivel' => 1]);
+            $this->livroModel->update($dados['id_livro'], ['status' => $dados['status']]);
             session()->setFlashdata('success', 'Devolução registrada com sucesso.');
         } else {
             session()->setFlashdata('error', 'Erro ao registrar a devolução.');

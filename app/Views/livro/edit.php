@@ -1,39 +1,22 @@
 <div class="container p-5">
-
     <div class="card shadow mb-4">
-
         <div class="card-body">
-
             <?= form_open('Livro/salvar') ?>
-
             <input value='<?= $livro['id'] ?>' class='form-control' type="hidden" id='id' name='id'>
-
             <div class="row p-2">
-
                 <div class="col-2">
-
                     <label class="form-label" for="nome">Status</label>
-
                 </div>
 
                 <div class="col-10">
-
                     <select class='form-select' name="status" id="status" required>
-
                         <option value="<?= $livro['status'] ?>" hidden><?= $status[$livro['status']] ?>
-
                             <?php foreach ($status as $chave => $valor) : ?>
-
                         <option value="<?= $chave ?>"><?= $valor ?></option>
-
                         <?php endforeach ?>
-
                         </option>
-
                     </select>
-
                 </div>
-
             </div>
 
             <div class="row p-2">

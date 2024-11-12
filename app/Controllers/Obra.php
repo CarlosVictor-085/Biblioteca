@@ -274,7 +274,7 @@ class Obra extends BaseController
                     </tr>
                 </thead>
                 <tbody>';
-    
+     
         // Popula os dados das obras
         $pdf->SetFont('helvetica', '', 10);
         foreach ($obra as $ob) {
