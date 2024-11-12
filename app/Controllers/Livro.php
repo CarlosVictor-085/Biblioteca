@@ -13,6 +13,7 @@ class Livro extends BaseController
     private $obraModel;
     private $livroModel;
     private $emprestimoModel;
+    
     public function __construct()
     {
         $this->obraModel = new ObraModel();
@@ -53,8 +54,6 @@ class Livro extends BaseController
         $status = LivroModel::STATUSLIVRO;
         $livro = $this->livroModel->join('obra', 'livro.id_obra = obra.id')
             ->select('livro.id,livro.disponivel,livro.status,livro.id_obra,livro.tombo,obra.titulo')->find($id);
-        //$livro = $this->livroModel->find($id);
-        //dd($livro);
         $obra = $this->obraModel->findAll();
         echo view('_partials/header');
         echo view('_partials/navbar');
@@ -120,17 +119,31 @@ class Livro extends BaseController
 
         // Inicia TCPDF
         $pdf = new TCPDF();
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Sistema de Gerenciamento');
+        $pdf->SetTitle('Relatório de Livros Perdidos');
+        $pdf->SetMargins(15, 15, 15);
+        $pdf->SetAutoPageBreak(true, 15);
+        
+        
         $pdf->AddPage();
-        $pdf->SetFont('helvetica', '', 10);
+        
+        // Definindo a fonte e o título
+        $pdf->SetFont('helvetica', 'B', 16);
+        $pdf->Cell(0, 10, 'Relatório de Livros Perdidos', 0, 1, 'C');
 
+        $pdf->Cell(0, 0, '', 'B');
+        $pdf->Ln(5); // Espaço
+
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->Ln(5); // Espaço
         // Conteúdo HTML para o relatório
-        $html = '<h2>Relatório de Livros Perdidos</h2>';
 
         // Verifica se há registros de livros perdidos
         if (empty($livrosPerdidos)) {
-            $html .= '<p>Nada consta</p>';
+            $html = '<p>Nada consta</p>';
         } else {
-            $html .= '<table border="1" cellpadding="5">
+            $html = '<table border="1" cellpadding="5">
                     <thead>
                         <tr style="background-color: #cccccc;">
                             <th>Título</th>
@@ -186,17 +199,32 @@ class Livro extends BaseController
 
         // Inicia TCPDF
         $pdf = new TCPDF();
-        $pdf->AddPage();
-        $pdf->SetFont('helvetica', '', 10);
 
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Sistema de Gerenciamento');
+        $pdf->SetTitle('Relatório de Livros Danificados');
+        $pdf->SetMargins(15, 15, 15);
+        $pdf->SetAutoPageBreak(true, 15);
+        
+        
+        $pdf->AddPage();
+        
+        // Definindo a fonte e o título
+        $pdf->SetFont('helvetica', 'B', 16);
+        $pdf->Cell(0, 10, 'Relatório de Livros Danificados', 0, 1, 'C');
+
+        $pdf->Cell(0, 0, '', 'B');
+        $pdf->Ln(5); // Espaço
+
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->Ln(5); // Espaço
         // Conteúdo HTML para o relatório
-        $html = '<h2>Relatório de Livros Danificados</h2>';
 
         // Verifica se há registros de livros perdidos
         if (empty($livrosPerdidos)) {
-            $html .= '<p>Nada consta</p>';
+            $html = '<p>Nada consta</p>';
         } else {
-            $html .= '<table border="1" cellpadding="5">
+            $html = '<table border="1" cellpadding="5">
                     <thead>
                         <tr style="background-color: #cccccc;">
                             <th>Título</th>

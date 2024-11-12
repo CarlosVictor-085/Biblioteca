@@ -16,20 +16,19 @@ class Autor extends BaseController
 
     public function index()
     {
-        $dados = $this->autorModel->findAll();
-        $pager = $this->autorModel->pager;
+        $autor = $this->autorModel->findAll();
         echo view('_partials/header');
         echo view('_partials/navbar');
-        echo view('autor/index.php',['listaAutor' => $dados]);
+        echo view('autor/index.php',['listaAutor' => $autor]);
         echo view('_partials/footer');
     }
 
     public function editar($id)
     {
-        $dados = $this->autorModel->find($id);
+        $autor = $this->autorModel->find($id);
         echo view('_partials/header');
         echo view('_partials/navbar');
-        echo view('autor/edit',['autor' => $dados]);
+        echo view('autor/edit',['autor' => $autor]);
         echo view('_partials/footer');
 
     }

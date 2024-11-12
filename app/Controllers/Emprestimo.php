@@ -83,7 +83,6 @@ class Emprestimo extends BaseController
                 }
             }
         }
-        //dd($emprestimos);
         $livro = $this->livroModel->findAll();
         $dadosobra = $this->obraModel->findAll();
         $aluno = $this->alunoModel->findAll();
@@ -113,7 +112,6 @@ class Emprestimo extends BaseController
         } else {
             $dados['data_inicio_formatada'] = ''; // Defina como vazio se não houver dados
         }
-        //dd($dados);
         $dadosaluno = $this->alunoModel->findAll();
         $dadosobra = $this->obraModel->findAll();
         $dadosusuario = $this->usuarioModel->findAll();
@@ -166,7 +164,6 @@ class Emprestimo extends BaseController
     public function salvardev()
     {
         $dados = $this->request->getPost();
-        //dd($dados);
         // Tenta salvar a devolução
         if ($this->EmprestimoModel->save($dados)) {
             $this->livroModel->update($dados['id_livro'], ['disponivel' => 1]);
@@ -181,8 +178,6 @@ class Emprestimo extends BaseController
     public function excluir()
     {
         $dados = $this->request->getPost();
-        // Debug para verificar os dados recebidos
-        //dd($dados);
         // Verifica se o ID do empréstimo está definido e exclui o empréstimo
         if (!empty($dados['id'])) {
             // Tenta excluir o empréstimo
@@ -222,12 +217,26 @@ class Emprestimo extends BaseController
 
         // Inicia TCPDF
         $pdf = new TCPDF();
-        $pdf->AddPage();
-        $pdf->SetFont('helvetica', '', 10);
 
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Sistema de Gerenciamento');
+        $pdf->SetTitle('Relatório de Empréstimos Não Devolvidos');
+        $pdf->SetMargins(15, 15, 15);
+        $pdf->SetAutoPageBreak(true, 15);
+        
+        $pdf->AddPage();
+
+        // Definindo a fonte e o título
+        $pdf->SetFont('helvetica', 'B', 16);
+        $pdf->Cell(0, 10, 'Relatório de Empréstimos Não Devolvidos', 0, 1, 'C');
+        
+        $pdf->Cell(0, 0, '', 'B');
+        $pdf->Ln(5); // Espaço
+        
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->Ln(5); // Espaço
         // Conteúdo HTML para o relatório
-        $html = '<h2>Relatório de Pendências de Empréstimos</h2>';
-        $html .= '<table border="1" cellpadding="5">
+        $html = '<table border="1" cellpadding="5">
                     <thead>
                         <tr style="background-color: #cccccc;">
                             <th>Aluno</th>
@@ -305,12 +314,28 @@ class Emprestimo extends BaseController
 
         // Inicia TCPDF
         $pdf = new TCPDF();
+
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Sistema de Gerenciamento');
+        $pdf->SetTitle('Relatório de Empréstimos Devolvidos');
+        $pdf->SetMargins(15, 15, 15);
+        $pdf->SetAutoPageBreak(true, 15);
+        
         $pdf->AddPage();
-        $pdf->SetFont('helvetica', '', 10);
+        
+        $pdf->SetFont('helvetica', 'B', 16);
+                // Definindo a fonte e o título
+                $pdf->SetFont('helvetica', 'B', 16);
+                $pdf->Cell(0, 10, 'Relatório de Empréstimos Devolvidos', 0, 1, 'C');
+                
+                $pdf->Cell(0, 0, '', 'B');
+                $pdf->Ln(5); // Espaço
+                
+                $pdf->SetFont('helvetica', '', 10);
+                $pdf->Ln(5); // Espaço
 
         // Conteúdo HTML para o relatório
-        $html = '<h2>Relatório de Empréstimos Devolvidos</h2>';
-        $html .= '<table border="1" cellpadding="5">
+        $html = '<table border="1" cellpadding="5">
                 <thead>
                     <tr style="background-color: #cccccc;">
                         <th>Aluno</th>

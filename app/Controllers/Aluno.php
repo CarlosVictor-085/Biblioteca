@@ -21,7 +21,6 @@ class Aluno extends BaseController
     public function index()
     {
         $dados = $this->alunoModel->findAll();
-        $pager = $this->alunoModel->pager;
         echo view('_partials/header');
         echo view('_partials/navbar');
         echo view('aluno/index.php', ['listaAlunos' => $dados]);
@@ -41,10 +40,10 @@ class Aluno extends BaseController
 
     public function editar($id)
     {
-        $dados = $this->alunoModel->find($id);
+        $aluno = $this->alunoModel->find($id);
         echo view('_partials/header');
         echo view('_partials/navbar');
-        echo view('aluno/edit', ['aluno' => $dados]);
+        echo view('aluno/edit', ['aluno' => $aluno]);
         echo view('_partials/footer');
     }
 
@@ -112,9 +111,8 @@ class Aluno extends BaseController
 
         // Adiciona informações do aluno
         $aluno = $this->alunoModel->find($id);
-        $pdf->SetFont('helvetica', 'B', 13);
-        $pdf->Cell(0, 8, 'Aluno: ' . htmlspecialchars($aluno['nome']), 0, 1, 'L');
-        $pdf->Ln(5); // Espaço
+        $pdf->SetFont('helvetica','',  12);
+        $pdf->Cell(0, 8, 'Nome: ' . htmlspecialchars($aluno['nome']), 0, 1, 'L');
 
         // Verificar se o aluno possui empréstimos
         if (empty($emprestimos)) {
@@ -126,7 +124,10 @@ class Aluno extends BaseController
             // Exibe o total de empréstimos
             $pdf->SetFont('helvetica', '', 12);
             $pdf->Cell(0, 8, 'Total de Empréstimos: ' . $totalEmprestimos, 0, 1, 'L');
+
+            $pdf->Cell(0, 0, '', 'B');
             $pdf->Ln(5); // Espaço
+            
             // Caso contrário, exibe os empréstimos
             $pdf->SetFont('helvetica', '', 12);
             $pdf->Cell(0, 8, 'Empréstimos Realizados:', 0, 1, 'L');

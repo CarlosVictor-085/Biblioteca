@@ -177,8 +177,6 @@ class Obra extends BaseController
         return redirect()->to(previous_url());
     }
 
-
-
     public function excluir_autor()
     {
         $id = $this->request->getPost('id'); // Obter o ID genérico a partir do POST
@@ -200,8 +198,6 @@ class Obra extends BaseController
         // Redireciona para a página anterior
         return redirect()->to(previous_url());
     }
-
-
 
     public function getAutores($id_obra)
     {
@@ -253,12 +249,19 @@ class Obra extends BaseController
         $pdf->SetFont('helvetica', 'B', 16);
         $pdf->Cell(0, 10, 'Relatório de Todas as Obras', 0, 1, 'C');
     
-        $pdf->SetFont('helvetica', '', 14);
-        $pdf->Cell(0, 8, 'Total de Obras: ' . $totalObras, 0, 1, 'C');
-        $pdf->Ln(5); // Espaço entre o título e a tabela
+        $pdf->SetFont('helvetica', '', 12);
+        $pdf->Cell(0, 8, 'Total de Obras: ' . $totalObras, 0, 1, '');
     
+        $pdf->Cell(0, 0, '', 'B');
+        $pdf->Ln(5); // Espaço
+        
+        // Caso contrário, exibe os empréstimos
+        $pdf->SetFont('helvetica', '', 12);
+        $pdf->Cell(0, 8, 'Detalhes De Obras:', 0, 1, 'L');
+        $pdf->Ln(5); // Espaço
+        
         // Cria o cabeçalho da tabela
-        $pdf->SetFont('helvetica', 'B', 12);
+        $pdf->SetFont('helvetica', 'B', 10);
         $html = '
         <div class="table-responsive">
             <table border="1" cellpadding="5" cellspacing="0">

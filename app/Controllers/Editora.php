@@ -16,22 +16,34 @@ class Editora extends BaseController
 
     public function index()
     {
-        $dados = $this->editoraModel->findAll();
+        $editora = $this->editoraModel->findAll();
         echo view('_partials/header');
         echo view('_partials/navbar');
-        echo view('editora/index.php', ['listaEditora' => $dados]);
+        echo view('editora/index.php', ['listaEditora' => $editora]);
         echo view('_partials/footer');
     }
 
     public function editar($id)
     {
-        $dados = $this->editoraModel->find($id);
+        $editora = $this->editoraModel->find($id);
         echo view('_partials/header');
         echo view('_partials/navbar');
-        echo view('editora/edit', ['editora' => $dados]);
+        echo view('editora/edit', ['editora' => $editora]);
         echo view('_partials/footer');
     }
 
+    public function cadastrar()
+    {
+        $editora = $this->request->getPost();
+        // Tenta salvar a editora e exibe mensagem de sucesso ou erro
+        if ($this->editoraModel->save($editora)) {
+            session()->setFlashdata('success', 'Editora cadastrada com sucesso.');
+        } else {
+            session()->setFlashdata('error', 'Erro ao cadastrar a editora.');
+        }
+        return redirect()->to('Editora/index');
+    }
+    
     public function salvar()
     {
         $editora = $this->request->getPost();
