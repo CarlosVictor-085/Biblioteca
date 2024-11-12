@@ -82,7 +82,7 @@ class Session extends BaseConfig
 
      */
 
-    public int $expiration = 350000;
+    public int $expiration = 7200;
 
 
 
@@ -158,7 +158,7 @@ class Session extends BaseConfig
 
      */
 
-    public int $timeToUpdate = 300;
+    public int $timeToUpdate = 3600;
 
 
 
