@@ -25,10 +25,11 @@ class Suporte extends BaseController
 
         $emailService = \Config\Services::email();
         $emailService->setFrom($email, 'Suporte');
-        $emailService->setTo('carlosvictorrodrigues13@gmail.com');
+        $emailService->setTo('carlosvictorrodrigues45@gmail.com');
         $emailService->setReplyTo($email, $nome);
         $emailService->setSubject($assunto);
-        $emailService->setMessage("Nome: $nome\n\nEmail: $email\n\nMensagem:\n$mensagem");
+        $emailService->setMessage("Nome: $nome<br>Email: $email<br>Mensagem:<br>$mensagem");
+
 
         if ($emailService->send()) {
             session()->setFlashdata('success', 'Mensagem enviada com sucesso!');
