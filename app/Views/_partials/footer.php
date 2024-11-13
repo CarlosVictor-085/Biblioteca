@@ -7,8 +7,8 @@
             <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                 <div class="mb-2 mb-md-0">
                     @
-                    <a class="footer-link fw-bolder" href="">
-                        SEPLAG - CCTI | CARLOS VICTOR</a>
+                    <a class="footer-link fw-bolder" href="<?=base_url('Suporte')?>">
+                        SEPLAG - CCTI | CARLOS VICTOR - SUPORTE</a>
                     2024
                 </div>
             </div>
@@ -24,7 +24,7 @@ const alertIconUrl = '<?= base_url('assets/img/sga.png') ?>';
 
         </html>
 
-        <script src="<?= base_url('assets/jquery/jquery.js') ?>"></script>
+        <script src=" <?= base_url('assets/jquery/jquery.js') ?>"></script>
 
         <script src="<?= base_url('assets/bootstrap/js/bootstrap.bundle.js') ?>"></script>
 
@@ -55,7 +55,8 @@ const alertIconUrl = '<?= base_url('assets/img/sga.png') ?>';
         <script src="<?= base_url('assets/jquery/alert.js') ?>"></script>
         <script src="<?= base_url('assets/jquery/menuitemopen.js') ?>"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js">
+        </script>
 
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -63,7 +64,8 @@ const alertIconUrl = '<?= base_url('assets/img/sga.png') ?>';
 
         </script>
 
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js">
+        </script>
 
         <script src="https://cdn.datatables.net/2.1.6/js/dataTables.js"></script>
 
