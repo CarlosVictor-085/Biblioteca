@@ -78,7 +78,7 @@ class Email extends BaseConfig
 
      */
 
-    public string $SMTPPass = '******';
+    public string $SMTPPass = 'lrkt tgih hlvv wicb';
 
 
 
