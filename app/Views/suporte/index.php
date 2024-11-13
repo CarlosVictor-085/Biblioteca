@@ -1,7 +1,8 @@
-<div class="container p-5">
+<div class="container">
+    <h1>Formulario De Suporte</h1>
+    <br>
     <div class="card shadow mb-4">
         <div class="card-body">
-
             <!-- Formulário para enviar mensagem de suporte -->
             <?= form_open('Suporte/enviar') ?>
 
@@ -51,7 +52,7 @@
             <div class="row p-4">
                 <div class="col">
                     <div class="btn-group w-100" role="group">
-                        <a href='<?= base_url('Home') ?>' class="btn btn-outline-secondary m-1">Cancelar</a>
+                        <a href='<?=previous_url()?>' class="btn btn-outline-secondary m-1">Cancelar</a>
                         <button type="submit" class="btn btn-outline-success m-1">Enviar</button>
                     </div>
                 </div>
