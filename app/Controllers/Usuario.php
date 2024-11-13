@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\UsuarioModel;
+use CodeIgniter\Email\Email;
 
 class Usuario extends BaseController
 {
     private $usuarioModel;
-    
+
     public function __construct()
     {
         $this->usuarioModel = new UsuarioModel();
@@ -45,15 +47,56 @@ class Usuario extends BaseController
 
     public function cadastrar()
     {
+        // Gerar uma senha aleatória
+        $senhaGerada = bin2hex(random_bytes(4));  // Gerando uma senha de 8 caracteres (4 bytes)
+
+        // Pegando os dados do formulário
         $usuario = $this->request->getPost();
-        // Tenta salvar o usuário e exibe mensagem de sucesso ou erro
+
+        // Adicionando a senha gerada ao array de dados
+        $usuario['senha'] = $senhaGerada;
+
+        // Tenta salvar o usuário
         if ($this->usuarioModel->save($usuario)) {
             session()->setFlashdata('success', 'Usuário cadastrado com sucesso.');
+
+            // Enviar o email com a senha gerada
+            $this->enviarEmailSenha($usuario['email'], $senhaGerada,$usuario['nome']);
         } else {
             session()->setFlashdata('error', 'Erro ao cadastrar o usuário.');
         }
+
         return redirect()->to(previous_url());
     }
+
+    protected function enviarEmailSenha($email, $senha,$nome)
+    {
+        $emailService = \Config\Services::email();
+
+        // Configuração do email
+        $emailService->setFrom('carlosvictorrodrigues45@gmail.com', 'Biblioteca');
+        $emailService->setTo($email);
+        $emailService->setSubject('Sua Senha de Acesso');
+
+        // Corpo do email
+        $mensagem = "Olá, $nome Sua conta foi criada com sucesso. Abaixo está sua senha de acesso:<br>";
+        $mensagem .= "Senha: $senha<br>";
+        $mensagem .= "Por favor, faça login e altere sua senha assim que possível.\n\n";
+        $mensagem .= "Atenciosamente,\nBiblioteca.";
+
+        $emailService->setMessage($mensagem);
+
+        // Enviar o email
+        if ($emailService->send()) {
+            //log_message('info', 'Email com senha enviado para: ' . $email);
+            session()->setFlashdata('success', 'Email com senha enviado para: ' . $email);
+        } else {
+            //log_message('error', 'Erro ao enviar email para: ' . $email);
+            session()->setFlashdata('error', 'Erro ao enviar email para: ' . $email);
+        }
+    }
+
+
 
     public function salvar()
     {
@@ -90,5 +133,4 @@ class Usuario extends BaseController
         }
         return redirect()->to('Usuario/index');
     }
-
 }
