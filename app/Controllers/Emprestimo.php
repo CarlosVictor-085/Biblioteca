@@ -44,40 +44,31 @@ class Emprestimo extends BaseController
             ->orderBy('e.id', 'DESC'); // Ordena os resultados
         // Obtendo todos os registros
         $emprestimos = $builder->get()->getResultArray();
-        // Processando cada empréstimo para formatar as datas e calcular o estado da devolução
+        
         foreach ($emprestimos as &$emprestimo) {
-            // Formatando a data de início
-            $data_inicio = explode('-', $emprestimo['data_inicio']);
-            $timestamp_inicio = mktime(0, 0, 0, $data_inicio[1], $data_inicio[2], $data_inicio[0]);
-            $emprestimo['data_inicio_formatada'] = date('d/m/Y', $timestamp_inicio);
-            // Calculando a data de prazo
-            $prazo = $emprestimo['data_prazo'] * 24 * 60 * 60; // Convertendo o prazo de dias para segundos
-            $timestamp_prazo = $timestamp_inicio + $prazo;
+            // Formatando as datas
+            $emprestimo['data_inicio_formatada'] = date_format(date_create($emprestimo['data_inicio']), 'd/m/Y');
+            $prazo = $emprestimo['data_prazo'] * 86400; // Prazo em segundos
+            $timestamp_prazo = strtotime($emprestimo['data_inicio']) + $prazo;
             $emprestimo['data_prazo_formatada'] = date('d/m/Y', $timestamp_prazo);
-            // Verificando e formatando a data de fim, se existir
+
             if (!empty($emprestimo['data_fim'])) {
-                $data_fim = explode('-', $emprestimo['data_fim']);
-                $timestamp_fim = mktime(0, 0, 0, $data_fim[1], $data_fim[2], $data_fim[0]);
-                $emprestimo['data_fim_formatada'] = date('d/m/Y', $timestamp_fim);
+                $emprestimo['data_fim_formatada'] = date_format(date_create($emprestimo['data_fim']), 'd/m/Y');
             } else {
                 $emprestimo['data_fim_formatada'] = 'Não definida';
             }
-            // Verifica se o status do livro é igual a 3 (Livro perdido)
+
+            // Status de devolução
             if ($emprestimo['status'] == 3) {
                 $emprestimo['status_devolucao'] = "Livro perdido";
-                // Define a data de fim como a data atual se estiver vazia
                 if (empty($emprestimo['data_fim'])) {
-                    $emprestimo['data_fim'] = date('Y-m-d'); // Define a data atual
-                    $emprestimo['data_fim_formatada'] = date('d/m/Y'); // Formata a data de fim como a data atual
+                    $emprestimo['data_fim'] = date('Y-m-d');
+                    $emprestimo['data_fim_formatada'] = date('d/m/Y');
                 }
             } else {
-                // Calculando se a devolução está no prazo ou fora do prazo, caso exista data de fim
                 if (!empty($emprestimo['data_fim'])) {
-                    if ($timestamp_fim - $timestamp_prazo <= 0) {
-                        $emprestimo['status_devolucao'] = "Devolução no prazo";
-                    } else {
-                        $emprestimo['status_devolucao'] = "Devolução fora do prazo";
-                    }
+                    $timestamp_fim = strtotime($emprestimo['data_fim']);
+                    $emprestimo['status_devolucao'] = $timestamp_fim <= $timestamp_prazo ? "Devolução no prazo" : "Devolução fora do prazo";
                 } else {
                     $emprestimo['status_devolucao'] = "Aguardando devolução";
                 }
@@ -223,16 +214,16 @@ class Emprestimo extends BaseController
         $pdf->SetTitle('Relatório de Empréstimos Não Devolvidos');
         $pdf->SetMargins(15, 15, 15);
         $pdf->SetAutoPageBreak(true, 15);
-        
+
         $pdf->AddPage();
 
         // Definindo a fonte e o título
         $pdf->SetFont('helvetica', 'B', 16);
         $pdf->Cell(0, 10, 'Relatório de Empréstimos Não Devolvidos', 0, 1, 'C');
-        
+
         $pdf->Cell(0, 0, '', 'B');
         $pdf->Ln(5); // Espaço
-        
+
         $pdf->SetFont('helvetica', '', 10);
         $pdf->Ln(5); // Espaço
         // Conteúdo HTML para o relatório
@@ -320,19 +311,19 @@ class Emprestimo extends BaseController
         $pdf->SetTitle('Relatório de Empréstimos Devolvidos');
         $pdf->SetMargins(15, 15, 15);
         $pdf->SetAutoPageBreak(true, 15);
-        
+
         $pdf->AddPage();
-        
+
         $pdf->SetFont('helvetica', 'B', 16);
-                // Definindo a fonte e o título
-                $pdf->SetFont('helvetica', 'B', 16);
-                $pdf->Cell(0, 10, 'Relatório de Empréstimos Devolvidos', 0, 1, 'C');
-                
-                $pdf->Cell(0, 0, '', 'B');
-                $pdf->Ln(5); // Espaço
-                
-                $pdf->SetFont('helvetica', '', 10);
-                $pdf->Ln(5); // Espaço
+        // Definindo a fonte e o título
+        $pdf->SetFont('helvetica', 'B', 16);
+        $pdf->Cell(0, 10, 'Relatório de Empréstimos Devolvidos', 0, 1, 'C');
+
+        $pdf->Cell(0, 0, '', 'B');
+        $pdf->Ln(5); // Espaço
+
+        $pdf->SetFont('helvetica', '', 10);
+        $pdf->Ln(5); // Espaço
 
         // Conteúdo HTML para o relatório
         $html = '<table border="1" cellpadding="5">

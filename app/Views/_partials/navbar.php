@@ -80,17 +80,17 @@
 
                 <?php if (session()->get('tipo_usuario') == 'Administrador'): ?>
 
-                <li class="menu-item" id="targetMenuItem">
+                    <li class="menu-item" id="targetMenuItem">
 
-                    <a href="<?= base_url('Usuario/index') ?>" class="menu-link">
+                        <a href="<?= base_url('Usuario/index') ?>" class="menu-link">
 
-                        <i class="menu-icon tf-icons bx bxs-user"></i>
+                            <i class="menu-icon tf-icons bx bxs-user"></i>
 
-                        <div data-i18n="Analytics">Usuario</div>
+                            <div data-i18n="Analytics">Usuario</div>
 
-                    </a>
+                        </a>
 
-                </li>
+                    </li>
 
                 <?php endif; ?>
 
@@ -348,13 +348,13 @@
             <script async defer src="https://buttons.github.io/buttons.js"></script>
 
             <script>
-            var logoutUrl = "<?php echo base_url('login/logout'); ?>";
+                var logoutUrl = "<?php echo base_url('login/logout'); ?>";
 
-            var baseUrl = "<?php echo base_url(); ?>";
+                var baseUrl = "<?php echo base_url(); ?>";
             </script>
 
             <script>
-            var baseUrl2 = '<?php echo base_url(); ?>'; // Defina a variável baseUrl
+                var baseUrl2 = '<?php echo base_url(); ?>'; // Defina a variável baseUrl
             </script>
 
             <!-- Modal de Erro -->
@@ -394,109 +394,109 @@
 
 
             <script>
-            // Função para formatar a primeira letra em maiúscula
+                // Função para formatar a primeira letra em maiúscula
 
-            function capitalize(word) {
+                function capitalize(word) {
 
-                return word.charAt(0).toUpperCase() + word.slice(1);
-
-            }
-
-
-
-            // Obter o caminho da URL após "public" e dividi-lo em segmentos
-
-            const pathArray = window.location.pathname.split('/').filter(segment => segment && segment !== 'public');
-
-
-
-            // Selecionar o elemento do breadcrumb
-
-            const breadcrumbContainer = document.getElementById('breadcrumb');
-
-
-
-            // Adicionar "Biblioteca" como primeiro item
-
-            const libraryItem = document.createElement('li');
-
-            libraryItem.classList.add('breadcrumb-item', 'nav-item');
-
-            libraryItem.textContent = 'Biblioteca';
-
-            breadcrumbContainer.appendChild(libraryItem);
-
-
-
-            // Verificar se a URL termina com "editar"
-
-            const isEditing = pathArray.includes('editar');
-
-
-
-            // Montar breadcrumbs com base nos segmentos da URL após "public"
-
-            pathArray.forEach((segment, index) => {
-
-                const name = capitalize(segment);
-
-                const url = '/public/' + pathArray.slice(0, index + 1).join('/');
-
-
-
-                const listItem = document.createElement('li');
-
-                listItem.classList.add('breadcrumb-item', 'nav-item');
-
-
-
-                // Verificar se a URL é a página inicial (Home)
-
-                if (pathArray.length === 1 && pathArray[0] === 'Home') {
-
-                    // Não adiciona nenhum outro item, pois já temos "Biblioteca"
-
-                    return;
-
-                } else if (isEditing && index === pathArray.length - 1) {
-
-                    // Para páginas de edição
-
-                    listItem.classList.add('active');
-
-                    listItem.setAttribute('aria-current', 'page');
-
-                    listItem.textContent = name; // Exibe o nome do segmento
-
-                } else {
-
-                    // Para outras páginas, substituir "index" por "Início"
-
-                    if (name === 'Index') {
-
-                        // Não faz nada para não adicionar "Início" no breadcrumb
-
-                        return;
-
-                    } else {
-
-                        const link = document.createElement('a');
-
-                        link.href = url;
-
-                        link.textContent = name; // Mantém o nome formatado dos outros itens
-
-                        listItem.appendChild(link);
-
-                    }
+                    return word.charAt(0).toUpperCase() + word.slice(1);
 
                 }
 
 
 
-                breadcrumbContainer.appendChild(listItem);
+                // Obter o caminho da URL após "public" e dividi-lo em segmentos
 
-            });
+                const pathArray = window.location.pathname.split('/').filter(segment => segment && segment !== 'public');
+
+
+
+                // Selecionar o elemento do breadcrumb
+
+                const breadcrumbContainer = document.getElementById('breadcrumb');
+
+
+
+                // Adicionar "Biblioteca" como primeiro item
+
+                const libraryItem = document.createElement('li');
+
+                libraryItem.classList.add('breadcrumb-item', 'nav-item');
+
+                libraryItem.textContent = 'Biblioteca';
+
+                breadcrumbContainer.appendChild(libraryItem);
+
+
+
+                // Verificar se a URL termina com "editar"
+
+                const isEditing = pathArray.includes('editar');
+
+
+
+                // Montar breadcrumbs com base nos segmentos da URL após "public"
+
+                pathArray.forEach((segment, index) => {
+
+                    const name = capitalize(segment);
+
+                    const url = '/public/' + pathArray.slice(0, index + 1).join('/');
+
+
+
+                    const listItem = document.createElement('li');
+
+                    listItem.classList.add('breadcrumb-item', 'nav-item');
+
+
+
+                    // Verificar se a URL é a página inicial (Home)
+
+                    if (pathArray.length === 1 && pathArray[0] === 'Home') {
+
+                        // Não adiciona nenhum outro item, pois já temos "Biblioteca"
+
+                        return;
+
+                    } else if (isEditing && index === pathArray.length - 1) {
+
+                        // Para páginas de edição
+
+                        listItem.classList.add('active');
+
+                        listItem.setAttribute('aria-current', 'page');
+
+                        listItem.textContent = name; // Exibe o nome do segmento
+
+                    } else {
+
+                        // Para outras páginas, substituir "index" por "Início"
+
+                        if (name === 'Index') {
+
+                            // Não faz nada para não adicionar "Início" no breadcrumb
+
+                            return;
+
+                        } else {
+
+                            const link = document.createElement('a');
+
+                            link.href = url;
+
+                            link.textContent = name; // Mantém o nome formatado dos outros itens
+
+                            listItem.appendChild(link);
+
+                        }
+
+                    }
+
+
+
+                    breadcrumbContainer.appendChild(listItem);
+
+                });
             </script>
 
 

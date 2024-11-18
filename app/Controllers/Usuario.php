@@ -96,8 +96,6 @@ class Usuario extends BaseController
         }
     }
 
-
-
     public function salvar()
     {
         $usuario = $this->request->getPost();
