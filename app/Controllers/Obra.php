@@ -241,9 +241,28 @@ class Obra extends BaseController
         $pdf->SetTitle('Relatório de Obras');
         $pdf->SetMargins(15, 15, 15);
         $pdf->SetAutoPageBreak(true, 15);
-    
+        $pdf->setPrintHeader(false); // Desativa o cabeçalho (se a linha for do cabeçalho)
+
         // Adiciona uma página ao PDF
         $pdf->AddPage();
+
+        // Caminho da imagem com base_url
+        $imagem = base_url('assets/img/ce.png'); // Substitua pelo caminho real da sua imagem
+
+        // Largura da página do PDF
+        $pageWidth = $pdf->getPageWidth();
+
+        // Largura e altura da imagem
+        $imageWidth = 100;  // Largura ajustada da imagem
+        $imageHeight = 35; // Altura proporcional
+        
+
+        // Calculando a posição horizontal para centralizar a imagem
+        $xPosition = ($pageWidth - $imageWidth) / 2; // Centraliza a imagem na página
+        // Adiciona a imagem no PDF, na posição calculada
+        $pdf->Image($imagem, $xPosition, 15, $imageWidth, $imageHeight, 'PNG');
+
+        $pdf->Ln(45); // Ajuste a quantidade de espaço conforme necessário
     
         // Definindo a fonte e o tamanho para o título e total de obras
         $pdf->SetFont('helvetica', 'B', 16);

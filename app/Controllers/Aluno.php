@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use TCPDF;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -11,7 +12,7 @@ class Aluno extends BaseController
 {
     private $alunoModel;
     private $emprestimoModel;
-    
+
     public function __construct()
     {
         $this->alunoModel = new AlunoModel();
@@ -100,18 +101,36 @@ class Aluno extends BaseController
         $pdf->SetAuthor('Sistema de Gerenciamento');
         $pdf->SetTitle('Relatório de Empréstimos');
         $pdf->SetMargins(15, 15, 15);
-        $pdf->SetAutoPageBreak(true, 15);
+        $pdf->SetAutoPageBreak(true, 0);
+        $pdf->setPrintHeader(false); // Desativa o cabeçalho (se a linha for do cabeçalho)
 
         // Adiciona uma página ao PDF
         $pdf->AddPage();
 
+        // Caminho da imagem com base_url
+        $imagem = base_url('assets/img/ce.png'); // Substitua pelo caminho real da sua imagem
+
+        // Largura da página do PDF
+        $pageWidth = $pdf->getPageWidth();
+
+        // Largura e altura da imagem
+        $imageWidth = 100;  // Largura ajustada da imagem
+        $imageHeight = 35; // Altura proporcional
+        
+
+        // Calculando a posição horizontal para centralizar a imagem
+        $xPosition = ($pageWidth - $imageWidth) / 2; // Centraliza a imagem na página
+        // Adiciona a imagem no PDF, na posição calculada
+        $pdf->Image($imagem, $xPosition, 15, $imageWidth, $imageHeight, 'PNG');
+
+        $pdf->Ln(45); // Ajuste a quantidade de espaço conforme necessário
         // Definindo a fonte e o título
         $pdf->SetFont('helvetica', 'B', 16);
         $pdf->Cell(0, 10, 'Relatório de Empréstimos do Aluno', 0, 1, 'C');
 
         // Adiciona informações do aluno
         $aluno = $this->alunoModel->find($id);
-        $pdf->SetFont('helvetica','',  12);
+        $pdf->SetFont('helvetica', '',  12);
         $pdf->Cell(0, 8, 'Nome: ' . htmlspecialchars($aluno['nome']), 0, 1, 'L');
 
         // Verificar se o aluno possui empréstimos
@@ -127,7 +146,7 @@ class Aluno extends BaseController
 
             $pdf->Cell(0, 0, '', 'B');
             $pdf->Ln(5); // Espaço
-            
+
             // Caso contrário, exibe os empréstimos
             $pdf->SetFont('helvetica', '', 12);
             $pdf->Cell(0, 8, 'Empréstimos Realizados:', 0, 1, 'L');
