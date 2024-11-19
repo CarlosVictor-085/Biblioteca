@@ -498,9 +498,15 @@
 
                 });
             </script>
+            <div id="preloader">
+                <div class="loading-bar">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
 
-
-
-
-
-            <br>
+            <div id="main-content" style="display: none;">
+                <br>

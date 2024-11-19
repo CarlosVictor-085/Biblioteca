@@ -1,13 +1,17 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Ao carregar o DOM, exibe o preloader e esconde o conteúdo
-    document.getElementById("main-content").style.display = "none";
-    document.getElementById("preloader").style.display = "flex";
-});
-
-window.onload = function() {
-    // Após carregar todos os recursos, esconde o preloader e exibe o conteúdo
-    document.getElementById("preloader").style.display = "none";
-    document.getElementById("main-content").style.display = "block";
-
-};
-// Função para verificar e mostrar os alertas da sessão
+document.addEventListener("DOMContentLoaded", function () {
+    // Esconde o conteúdo inicialmente
+    document.getElementById("main-content").style.display = "none";
+    document.getElementById("preloader").style.display = "flex";
+});
+
+window.onload = function () {
+    // Após o carregamento, remove o preloader e exibe o conteúdo
+    const preloader = document.getElementById("preloader");
+    const mainContent = document.getElementById("main-content");
+
+    // Esconde o preloader instantaneamente
+    preloader.style.display = "none";
+
+    // Exibe o conteúdo principal
+    mainContent.style.display = "block";
+};

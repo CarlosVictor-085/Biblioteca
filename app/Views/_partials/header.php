@@ -160,29 +160,12 @@
 
 <link rel="stylesheet" href="<?= base_url('assets/css/select2.css') ?>" />
 
-
-
 <title>Biblioteca</title>
-
-
 
 </head>
 
 
-
 <body>
-
-    <div id="preloader">
-
-        <div class="loading">
-
-            <div class="spinner"></div>
-
-        </div>
-
-    </div>
-
-
 
     <div id="alert-container" class="alert-container"></div>
 
