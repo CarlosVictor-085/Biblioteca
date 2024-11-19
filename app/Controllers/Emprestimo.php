@@ -44,7 +44,7 @@ class Emprestimo extends BaseController
             ->orderBy('e.id', 'DESC'); // Ordena os resultados
         // Obtendo todos os registros
         $emprestimos = $builder->get()->getResultArray();
-        
+
         foreach ($emprestimos as &$emprestimo) {
             // Formatando as datas
             $emprestimo['data_inicio_formatada'] = date_format(date_create($emprestimo['data_inicio']), 'd/m/Y');
@@ -219,35 +219,21 @@ class Emprestimo extends BaseController
         // Adiciona uma página ao PDF
         $pdf->AddPage();
 
-        // Caminho da imagem com base_url
-        $imagem = base_url('assets/img/ce.png'); // Substitua pelo caminho real da sua imagem
-
-        // Largura da página do PDF
-        $pageWidth = $pdf->getPageWidth();
-
-        // Largura e altura da imagem
-        $imageWidth = 100;  // Largura ajustada da imagem
-        $imageHeight = 35; // Altura proporcional
-        
-
-        // Calculando a posição horizontal para centralizar a imagem
-        $xPosition = ($pageWidth - $imageWidth) / 2; // Centraliza a imagem na página
-        // Adiciona a imagem no PDF, na posição calculada
-        $pdf->Image($imagem, $xPosition, 15, $imageWidth, $imageHeight, 'PNG');
-
-        $pdf->Ln(45); // Ajuste a quantidade de espaço conforme necessário
-
         // Definindo a fonte e o título
         $pdf->SetFont('helvetica', 'B', 16);
         $pdf->Cell(0, 10, 'Relatório de Empréstimos Não Devolvidos', 0, 1, 'C');
 
         $pdf->Cell(0, 0, '', 'B');
         $pdf->Ln(5); // Espaço
-
-        $pdf->SetFont('helvetica', '', 10);
-        $pdf->Ln(5); // Espaço
-        // Conteúdo HTML para o relatório
-        $html = '<table border="1" cellpadding="5">
+        if (empty($emprestimos)) {
+            // Se não houver empréstimos, exibe "Nada consta"
+            $pdf->SetFont('helvetica', 'I', 12);
+            $pdf->Cell(0, 8, 'Nada consta', 0, 1, 'L');
+        } else {
+            $pdf->SetFont('helvetica', '', 10);
+            $pdf->Ln(5); // Espaço
+            // Conteúdo HTML para o relatório
+            $html = '<table border="1" cellpadding="5">
                     <thead>
                         <tr style="background-color: #cccccc;">
                             <th>Aluno</th>
@@ -261,23 +247,23 @@ class Emprestimo extends BaseController
                     </thead>
                     <tbody>';
 
-        foreach ($emprestimos as $emprestimo) {
-            // Controle para evitar duplicação
-            if (in_array($emprestimo['id_livro'], $obrasExibidas)) {
-                continue; // Pula para o próximo se a obra já foi exibida
-            }
+            foreach ($emprestimos as $emprestimo) {
+                // Controle para evitar duplicação
+                if (in_array($emprestimo['id_livro'], $obrasExibidas)) {
+                    continue; // Pula para o próximo se a obra já foi exibida
+                }
 
-            // Marca o livro como exibido
-            $obrasExibidas[] = $emprestimo['id_livro'];
+                // Marca o livro como exibido
+                $obrasExibidas[] = $emprestimo['id_livro'];
 
-            // Formata as datas
-            $data_inicio = date('d/m/Y', strtotime($emprestimo['data_inicio']));
-            $prazo_segundos = $emprestimo['data_prazo'] * 24 * 60 * 60; // Converte o prazo em segundos
-            $timestamp_prazo = strtotime($emprestimo['data_inicio']) + $prazo_segundos;
-            $data_prazo = date('d/m/Y', $timestamp_prazo);
+                // Formata as datas
+                $data_inicio = date('d/m/Y', strtotime($emprestimo['data_inicio']));
+                $prazo_segundos = $emprestimo['data_prazo'] * 24 * 60 * 60; // Converte o prazo em segundos
+                $timestamp_prazo = strtotime($emprestimo['data_inicio']) + $prazo_segundos;
+                $data_prazo = date('d/m/Y', $timestamp_prazo);
 
-            // Linha da tabela com os dados
-            $html .= "<tr>
+                // Linha da tabela com os dados
+                $html .= "<tr>
                         <td>{$emprestimo['nome_aluno']}</td>
                         <td>{$emprestimo['telefone']}</td>
                         <td>{$emprestimo['turma']}</td>
@@ -286,13 +272,13 @@ class Emprestimo extends BaseController
                         <td>{$data_inicio}</td>
                         <td>{$data_prazo}</td>
                       </tr>";
+            }
+
+            $html .= '</tbody></table>';
+
+            // Adiciona o conteúdo HTML ao PDF
+            $pdf->writeHTML($html, true, false, true, false, '');
         }
-
-        $html .= '</tbody></table>';
-
-        // Adiciona o conteúdo HTML ao PDF
-        $pdf->writeHTML($html, true, false, true, false, '');
-
         // Configuração dos headers do PDF
         header('Content-Type: application/pdf');
         header('Content-Disposition: inline; filename="relatorio_pendencias_emprestimos.pdf"');
@@ -336,23 +322,6 @@ class Emprestimo extends BaseController
         // Adiciona uma página ao PDF
         $pdf->AddPage();
 
-        // Caminho da imagem com base_url
-        $imagem = base_url('assets/img/ce.png'); // Substitua pelo caminho real da sua imagem
-
-        // Largura da página do PDF
-        $pageWidth = $pdf->getPageWidth();
-
-        // Largura e altura da imagem
-        $imageWidth = 100;  // Largura ajustada da imagem
-        $imageHeight = 35; // Altura proporcional
-        
-
-        // Calculando a posição horizontal para centralizar a imagem
-        $xPosition = ($pageWidth - $imageWidth) / 2; // Centraliza a imagem na página
-        // Adiciona a imagem no PDF, na posição calculada
-        $pdf->Image($imagem, $xPosition, 15, $imageWidth, $imageHeight, 'PNG');
-
-        $pdf->Ln(45); // Ajuste a quantidade de espaço conforme necessário
         $pdf->SetFont('helvetica', 'B', 16);
         // Definindo a fonte e o título
         $pdf->SetFont('helvetica', 'B', 16);
@@ -360,12 +329,16 @@ class Emprestimo extends BaseController
 
         $pdf->Cell(0, 0, '', 'B');
         $pdf->Ln(5); // Espaço
+        if (empty($emprestimos)) {
+            // Se não houver empréstimos, exibe "Nada consta"
+            $pdf->SetFont('helvetica', 'I', 12);
+            $pdf->Cell(0, 8, 'Nada consta', 0, 1, 'L');
+        } else {
+            $pdf->SetFont('helvetica', '', 10);
+            $pdf->Ln(5); // Espaço
 
-        $pdf->SetFont('helvetica', '', 10);
-        $pdf->Ln(5); // Espaço
-
-        // Conteúdo HTML para o relatório
-        $html = '<table border="1" cellpadding="5">
+            // Conteúdo HTML para o relatório
+            $html = '<table border="1" cellpadding="5">
                 <thead>
                     <tr style="background-color: #cccccc;">
                         <th>Aluno</th>
@@ -380,17 +353,17 @@ class Emprestimo extends BaseController
                 </thead>
                 <tbody>';
 
-        foreach ($emprestimos as $emprestimo) {
-            // Formata as datas
-            $data_inicio = date('d/m/Y', strtotime($emprestimo['data_inicio']));
-            $data_fim = date('d/m/Y', strtotime($emprestimo['data_fim']));
+            foreach ($emprestimos as $emprestimo) {
+                // Formata as datas
+                $data_inicio = date('d/m/Y', strtotime($emprestimo['data_inicio']));
+                $data_fim = date('d/m/Y', strtotime($emprestimo['data_fim']));
 
-            $prazo_segundos = $emprestimo['data_prazo'] * 24 * 60 * 60; // Converte o prazo em segundos
-            $timestamp_prazo = strtotime($emprestimo['data_inicio']) + $prazo_segundos;
-            $data_prazo = date('d/m/Y', $timestamp_prazo);
+                $prazo_segundos = $emprestimo['data_prazo'] * 24 * 60 * 60; // Converte o prazo em segundos
+                $timestamp_prazo = strtotime($emprestimo['data_inicio']) + $prazo_segundos;
+                $data_prazo = date('d/m/Y', $timestamp_prazo);
 
-            // Linha da tabela com os dados formatados
-            $html .= "<tr>
+                // Linha da tabela com os dados formatados
+                $html .= "<tr>
                     <td>{$emprestimo['nome_aluno']}</td>
                     <td>{$emprestimo['telefone']}</td>
                     <td>{$emprestimo['turma']}</td>
@@ -400,13 +373,13 @@ class Emprestimo extends BaseController
                     <td>{$data_prazo}</td>
                     <td>{$data_fim}</td>
                   </tr>";
+            }
+
+            $html .= '</tbody></table>';
+
+            // Adiciona o conteúdo HTML ao PDF
+            $pdf->writeHTML($html, true, false, true, false, '');
         }
-
-        $html .= '</tbody></table>';
-
-        // Adiciona o conteúdo HTML ao PDF
-        $pdf->writeHTML($html, true, false, true, false, '');
-
         // Configuração dos headers do PDF
         header('Content-Type: application/pdf');
         header('Content-Disposition: inline; filename="relatorio_devolvidos_emprestimos.pdf"');
