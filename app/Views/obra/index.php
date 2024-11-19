@@ -68,226 +68,114 @@
     </div>
 
     <!-- Modal -->
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
         <?= form_open("Obra/cadastrar") ?>
-
         <div class="modal-dialog">
-
             <div class="modal-content">
-
                 <div class="modal-header">
-
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Nova Obra</h1>
-
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
                 </div>
-
                 <div class="modal-body">
-
                     <div class="form-group">
-
                         <label class="form-label" for="titulo">Titulo:</label>
-
                         <input class=' form-control' type="text" id='titulo' name='titulo' required>
-
                     </div>
-
                     <div class="form-group">
-
                         <label class="form-label" for="categoria">Categoria:</label>
-
                         <input class='form-control' type="text" id='categoria' name='categoria' required>
-
                     </div>
-
                     <div class="form-group">
-
                         <label class="form-label" for="ano">Ano:</label>
-
                         <input class='form-control' type="text" id='ano_publicacao' name='ano_publicacao' required>
-
                     </div>
-
                     <div class="form-group">
-
                         <label class="form-label" for="isbn">ISBN:</label>
-
                         <input class='form-control' type="text" id='isbn' name='isbn' required>
-
                     </div>
-
                     <div class="form-group">
-
                         <label class="form-label" for="telefone">EDITORA:</label>
-
                         <select class='form-select' name="id_editora" id="select-editor" required>
-
                             <?php foreach ($listaEditora as $ob) : ?>
-
                             <option value="<?= $ob['id'] ?>"><?= $ob['nome'] ?></option>
-
                             <?php endforeach ?>
-
                         </select>
-
                     </div>
-
                     <div class="form-group">
-
                         <label class="form-label" for="isbn">Quantidade:</label>
-
                         <input class='form-control' type="number" id='quantidade' name='quantidade' min="1" max="100"
                             required>
-
-
-
                     </div>
-
                     <div class="form-group" id="tomboContainer"> </div>
-
-
-
                 </div>
-
                 <div class="modal-footer">
-
                     <button type="submit" class="btn btn-outline-success">Cadastrar</button>
-
                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
-
                 </div>
-
             </div>
-
         </div>
-
         <?= form_close() ?>
-
     </div>
-
 </div>
-
-
 
 <?php
-
 // Mapeia os autores por ID
-
 $autor = [];
-
 foreach ($listaAutor as $a) {
-
     $autor[$a['id']] = $a['nome'];
 }
-
-
-
 // Mapeia os autores da obra
-
 $autoresObra = [];
-
 foreach ($listaAutorObra as $lao) {
-
     $autoresObra[] = [
-
         'id_autor' => $lao['id_autor'],
-
         'id_obra' => $lao['id_obra'],
-
         'id' => $lao['id'] // Presumindo que há um campo 'id' em autor_obra
-
     ];
 }
-
 ?>
 
-
-
 <!-- Modal para exibir os autores -->
-
 <div class="modal fade" id="modalAutores" tabindex="-1" aria-labelledby="modalAutoresLabel" aria-hidden="true">
-
     <div class="modal-dialog">
-
         <div class="modal-content">
-
             <div class="modal-header">
-
                 <h5 class="modal-title" id="modalAutoresLabel">Autores da Obra</h5>
-
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
             </div>
-
             <div class="modal-body">
-
                 <input type="hidden" id="obraId">
-
                 <div id="listaAutoresModal"></div> <!-- Lista de autores que será preenchida via JavaScript -->
-
             </div>
-
             <div class="modal-footer">
-
                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Fechar</button>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
-
-
 <!-- Formulário de exclusão -->
-
 <?php echo form_open('Obra/excluir', ['id' => 'formExcluir']); ?>
-
 <input type="hidden" name="id" id="alunoId">
-
 <?php echo form_close(); ?>
 
-
-
 <!-- Modal de confirmação de exclusão -->
-
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-
     <div class="modal-dialog">
-
         <div class="modal-content">
-
             <div class="modal-header">
-
                 <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Exclusão</h5>
-
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
             </div>
-
             <div class="modal-body">
-
                 Tem certeza de que deseja excluir este obra?
-
             </div>
-
             <div class="modal-footer">
-
                 <button type="button" id="confirmDeleteBtn" class="btn btn-outline-danger">Excluir</button>
-
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 
@@ -349,10 +237,7 @@ function setModalData(id) {
 
 }
 
-
-
 // Adiciona um listener ao modal para definir os autores quando ele for aberto
-
 $('#modalAutores').on('show.bs.modal', function(event) {
 
     const button = $(event.relatedTarget); // Botão que abriu o modal
@@ -363,14 +248,6 @@ $('#modalAutores').on('show.bs.modal', function(event) {
 
 });
 </script>
-
-
-
-
-
-
-
-
 
 <script>
 document.getElementById('quantidade').addEventListener('input', function() {
@@ -441,10 +318,7 @@ document.getElementById('quantidade').addEventListener('input', function() {
 
 });
 
-
-
 // Função para verificar duplicatas de tombamento
-
 function verificarDuplicatas() {
 
     var tombos = document.querySelectorAll("input[name='tombo[]']");
@@ -487,8 +361,6 @@ function verificarDuplicatas() {
 
 }
 </script>
-
-
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -535,14 +407,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
-
-
-
-
-
-
-
-
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

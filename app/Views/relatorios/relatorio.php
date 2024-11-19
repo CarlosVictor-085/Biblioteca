@@ -64,5 +64,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <i class="fas fa-file-pdf fa-2x text-danger mb-3"></i>
+                    <h5 class="card-title">Relatório de Livros Disponiveis</h5>
+                    <p class="card-text">Veja a lista de livros marcados como disponiveis.</p>
+                    <a href="<?= base_url('Livro/relatorioLivrosDisponiveis') ?>" target="_blank"
+                        class="btn btn-outline-primary">Abrir Relatório</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

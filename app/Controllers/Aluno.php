@@ -41,10 +41,11 @@ class Aluno extends BaseController
 
     public function editar($id)
     {
+        $turma = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D', '3A', '3B', '3C', '3D'];
         $aluno = $this->alunoModel->find($id);
         echo view('_partials/header');
         echo view('_partials/navbar');
-        echo view('aluno/edit', ['aluno' => $aluno]);
+        echo view('aluno/edit', ['aluno' => $aluno,'turma' => $turma]);
         echo view('_partials/footer');
     }
 

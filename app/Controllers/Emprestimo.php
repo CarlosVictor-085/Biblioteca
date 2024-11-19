@@ -74,6 +74,7 @@ class Emprestimo extends BaseController
                 }
             }
         }
+
         $livro = $this->livroModel->findAll();
         $dadosobra = $this->obraModel->findAll();
         $aluno = $this->alunoModel->findAll();
@@ -95,23 +96,36 @@ class Emprestimo extends BaseController
         // Recupera o empréstimo específico pelo ID
         $dados = $this->EmprestimoModel->find($id);
         // Processa a data de início
-        if ($dados) {
-            $data_inicio = $dados['data_inicio'];
-            $data_inicio = explode('-', $data_inicio);
-            $data_inicio = mktime(0, 0, 0, $data_inicio[1], $data_inicio[2], $data_inicio[0]);
-            $dados['data_inicio_formatada'] = date('Y-m-d', $data_inicio); // Formato correto para o input type=date
+        if ($dados && !empty($dados['data_inicio'])) {
+            $dataInicio = date_create($dados['data_inicio']);
+            $dados['data_inicio_formatada'] = date_format($dataInicio, 'Y-m-d'); // Formato correto para o input type=date
         } else {
-            $dados['data_inicio_formatada'] = ''; // Defina como vazio se não houver dados
+            $dados['data_inicio_formatada'] = ''; // Defina como vazio se não houver dados ou a data estiver ausente
         }
+        // Recupera os dados das tabelas necessárias
         $dadosaluno = $this->alunoModel->findAll();
         $dadosobra = $this->obraModel->findAll();
         $dadosusuario = $this->usuarioModel->findAll();
         $dadoslivro = $this->livroModel->findAll();
+        // Cria o array associativo para as obras
+        $obras = [];
+        foreach ($dadosobra as $obra) {
+            $obras[$obra['id']] = $obra['titulo'];
+        }
+        // Passa os dados para a view
         echo view('_partials/header');
         echo view('_partials/navbar');
-        echo view('emprestimo/edit', ['emprestimo' => $dados, 'listaAluno' => $dadosaluno, 'listaLivro' => $dadoslivro, 'listaUsuario' => $dadosusuario, 'listaObra' => $dadosobra]);
+        echo view('emprestimo/edit', [
+            'emprestimo' => $dados,
+            'listaAluno' => $dadosaluno,
+            'listaLivro' => $dadoslivro,
+            'listaUsuario' => $dadosusuario,
+            'listaObra' => $dadosobra,
+            'obras' => $obras // Passando o array associativo de obras
+        ]);
         echo view('_partials/footer');
     }
+
 
     public function devolucao($id)
     {
