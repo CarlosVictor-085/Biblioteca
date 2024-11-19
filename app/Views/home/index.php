@@ -91,142 +91,196 @@
         </div>
     </div>
 
-    <!-- Carrossel de Notícias -->
-    <br>
-    <h3>Últimas Notícias</h3>
+    <!-- Botão para abrir o modal de cadastro de notícias -->
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastroNoticiaModal">Cadastrar Notícia</button>
+        </div>
+    </div>
+
+    <!-- Verificar se existem notícias, se não, não exibir a seção -->
+    <h3 class="text-center mb-4">Últimas Notícias</h3>
     <div id="noticiasCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner text-center">
-            <?php foreach ($noticias as $index => $noticia): ?>
-                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <div class="card mb-3">
-                                <img src="<?= $noticia['imagem'] ?>" class="card-img-top" alt="Imagem da Notícia">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?= $noticia['titulo'] ?></h5>
-                                    <p class="card-text"><?= $noticia['descricao'] ?></p>
-                                    <a href="<?= $noticia['link'] ?>" class="btn btn-primary">Leia mais</a>
+            <?php if (!empty($noticias)): // Verifica se existem notícias 
+            ?>
+                <?php foreach ($noticias as $index => $noticia): ?>
+                    <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <!-- Imagem da notícia -->
+                                    <img src="<?= base_url('uploads/noticias/' . $noticia['imagem']) ?>" class="card-img-top img-fluid" alt="Imagem da Notícia">
+
+                                    <!-- Corpo da notícia -->
+                                    <div class="card-body">
+                                        <!-- Título da notícia -->
+                                        <h5 class="card-title mb-3 text-center" style="font-size: 1.5rem; color: #555; font-weight: bold;"><?= $noticia['titulo'] ?></h5>
+
+                                        <!-- Descrição -->
+                                        <p class="card-text mb-4"><?= $noticia['descricao'] ?></p>
+
+                                        <!-- Botões centralizados -->
+                                        <div class="d-flex justify-content-center gap-3">
+                                            <a href="<?= $noticia['link'] ?>" class="btn btn-primary" target="_blank">Leia mais</a>
+                                            <a href="<?= base_url('Home/excluir_noticia/' . $noticia['id']) ?>" class="btn btn-danger">Excluir</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p class="text-center">Nenhuma notícia disponível no momento.</p>
+            <?php endif; ?>
         </div>
 
+        <!-- Controles do carrossel -->
         <button class="carousel-control-prev" type="button" data-bs-target="#noticiasCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: purple;"></span>
+            <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(50%);">></span>
             <span class="visually-hidden">Anterior</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#noticiasCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: purple;"></span>
+            <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(50%);">></span>
             <span class="visually-hidden">Próximo</span>
         </button>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const ctx = document.getElementById('meuGrafico').getContext('2d');
-    const meuGrafico = new Chart(ctx, {
-        type: 'bar', // ou 'line', 'pie', etc.
-        data: {
-            labels: ['Total de Alunos', 'Total de Autores', 'Total de Editoras', 'Livros Disponíveis',
-                'Empréstimos Devolvidos', 'Empréstimos Não Devolvidos'
-            ],
-            datasets: [{
-                label: 'Estatísticas da Biblioteca',
-                data: [<?= $novosAlunos ?>, <?= $totalAutores ?>, <?= $totalEditoras ?>,
-                    <?= $livrosDisponiveis ?>,
-                    <?= $emprestimosDevolvidos ?>, <?= $emprestimosNaoDevolvidos ?>
+    <!-- Modal de Cadastro de Notícia -->
+    <div class="modal fade" id="cadastroNoticiaModal" tabindex="-1" aria-labelledby="cadastroNoticiaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cadastroNoticiaModalLabel">Cadastrar Nova Notícia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?= form_open('Home/salvar_noticia', ['enctype' => 'multipart/form-data']) ?>
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagem" class="form-label">Imagem</label>
+                        <input type="file" class="form-control" id="imagem" name="imagem" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="link" class="form-label">Link</label>
+                        <input type="url" class="form-control" id="link" name="link" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <?= form_close() ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('meuGrafico').getContext('2d');
+        const meuGrafico = new Chart(ctx, {
+            type: 'bar', // ou 'line', 'pie', etc.
+            data: {
+                labels: ['Total de Alunos', 'Total de Autores', 'Total de Editoras', 'Livros Disponíveis',
+                    'Empréstimos Devolvidos', 'Empréstimos Não Devolvidos'
                 ],
-                backgroundColor: [
-                    'rgba(0, 123, 255, 0.6)', // Azul para Total de Alunos
-                    'rgba(255, 193, 7, 0.6)', // Amarelo para Total de Autores
-                    'rgba(108, 117, 125, 0.6)', // Cinza para Total de Editoras
-                    'rgba(0, 123, 255, 0.6)', // Azul para Livros Disponíveis
-                    'rgba(40, 167, 69, 0.6)', // Verde para Empréstimos Devolvidos
-                    'rgba(220, 53, 69, 0.6)' // Vermelho para Empréstimos Não Devolvidos
-                ],
-                borderColor: [
-                    'rgba(0, 123, 255, 1)', // Azul para Total de Alunos
-                    'rgba(255, 193, 7, 1)', // Amarelo para Total de Autores
-                    'rgba(108, 117, 125, 1)', // Cinza para Total de Editoras
-                    'rgba(0, 123, 255, 1)', // Azul para Livros Disponíveis
-                    'rgba(40, 167, 69, 1)', // Verde para Empréstimos Devolvidos
-                    'rgba(220, 53, 69, 1)' // Vermelho para Empréstimos Não Devolvidos
-                ],
-                rderWidth: 5,
-                borderRadius: 10,
-                barThickness: 60
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true, // Mantém a proporção
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.1)'
+                datasets: [{
+                    label: 'Estatísticas da Biblioteca',
+                    data: [<?= $novosAlunos ?>, <?= $totalAutores ?>, <?= $totalEditoras ?>,
+                        <?= $livrosDisponiveis ?>,
+                        <?= $emprestimosDevolvidos ?>, <?= $emprestimosNaoDevolvidos ?>
+                    ],
+                    backgroundColor: [
+                        'rgba(0, 123, 255, 0.6)', // Azul para Total de Alunos
+                        'rgba(255, 193, 7, 0.6)', // Amarelo para Total de Autores
+                        'rgba(108, 117, 125, 0.6)', // Cinza para Total de Editoras
+                        'rgba(0, 123, 255, 0.6)', // Azul para Livros Disponíveis
+                        'rgba(40, 167, 69, 0.6)', // Verde para Empréstimos Devolvidos
+                        'rgba(220, 53, 69, 0.6)' // Vermelho para Empréstimos Não Devolvidos
+                    ],
+                    borderColor: [
+                        'rgba(0, 123, 255, 1)', // Azul para Total de Alunos
+                        'rgba(255, 193, 7, 1)', // Amarelo para Total de Autores
+                        'rgba(108, 117, 125, 1)', // Cinza para Total de Editoras
+                        'rgba(0, 123, 255, 1)', // Azul para Livros Disponíveis
+                        'rgba(40, 167, 69, 1)', // Verde para Empréstimos Devolvidos
+                        'rgba(220, 53, 69, 1)' // Vermelho para Empréstimos Não Devolvidos
+                    ],
+                    rderWidth: 5,
+                    borderRadius: 10,
+                    barThickness: 60
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true, // Mantém a proporção
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            color: '#666',
+                            font: {
+                                size: 12
+                            }
+                        }
                     },
-                    ticks: {
-                        color: '#666',
-                        font: {
-                            size: 12
+                    x: {
+                        ticks: {
+                            color: '#666',
+                            autoSkip: false,
+                            autoSkip: false,
+                            maxRotation: 0, // Garante que o texto fique reto
+                            minRotation: 0
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
                         }
                     }
                 },
-                x: {
-                    ticks: {
-                        color: '#666',
-                        autoSkip: false,
-                        autoSkip: false,
-                        maxRotation: 0, // Garante que o texto fique reto
-                        minRotation: 0
-                    },
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.1)'
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#333',
-                        font: {
-                            size: 12
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#333',
+                            font: {
+                                size: 12
+                            }
                         }
                     }
                 }
             }
-        }
-    });
-</script>
+        });
+    </script>
 
-<style>
-    .card {
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-    }
-
-    .row {
-        margin-top: 20px;
-    }
-
-    /* Responsividade dos cards */
-    @media (max-width: 768px) {
+    <style>
         .card {
-            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
         }
-        canvas {
-            height: 250px;
-            /* Altura do gráfico em telas menores */
+
+        .card:hover {
+            transform: translateY(-5px);
         }
-    }
-</style>
+
+        .row {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                margin-bottom: 20px;
+            }
+
+            canvas {
+                height: 250px;
+            }
+        }
+    </style>

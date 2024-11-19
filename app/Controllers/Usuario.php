@@ -10,10 +10,12 @@ use CodeIgniter\Email\Email;
 class Usuario extends BaseController
 {
     private $usuarioModel;
+    protected $validation;
 
     public function __construct()
     {
         $this->usuarioModel = new UsuarioModel();
+        $this->validation = \Config\Services::validation();
     }
 
     public function index()
@@ -61,7 +63,7 @@ class Usuario extends BaseController
             session()->setFlashdata('success', 'Usuário cadastrado com sucesso.');
 
             // Enviar o email com a senha gerada
-            $this->enviarEmailSenha($usuario['email'], $senhaGerada,$usuario['nome']);
+            $this->enviarEmailSenha($usuario['email'], $senhaGerada, $usuario['nome']);
         } else {
             session()->setFlashdata('error', 'Erro ao cadastrar o usuário.');
         }
@@ -69,7 +71,7 @@ class Usuario extends BaseController
         return redirect()->to(previous_url());
     }
 
-    protected function enviarEmailSenha($email, $senha,$nome)
+    protected function enviarEmailSenha($email, $senha, $nome)
     {
         $emailService = \Config\Services::email();
 
@@ -130,5 +132,53 @@ class Usuario extends BaseController
             session()->setFlashdata('error', 'Erro ao excluir o usuário.');
         }
         return redirect()->to('Usuario/index');
+    }
+
+    public function alterarFoto($id)
+    {
+        // Verificar se a requisição é POST
+        if ($this->request->getMethod() === 'post') {
+            // Validar imagem
+            $image = $this->request->getFile('foto');
+
+            if ($image->isValid() && !$image->hasMoved()) {
+                // Buscar o usuário no banco de dados
+                $usuario = $this->usuarioModel->find($id);
+
+                if ($usuario) {
+                    // Verificar se já existe uma foto cadastrada
+                    if (!empty($usuario['foto']) && file_exists(FCPATH . 'uploads/perfil/' . $usuario['foto'])) {
+                        // Deletar a foto antiga se existir
+                        unlink(FCPATH . 'uploads/perfil/' . $usuario['foto']);
+                    }
+
+
+                    // Gerar um nome único para a nova imagem
+                    $newName = $image->getRandomName();
+                    // Mover a imagem para a pasta uploads/perfil
+                    $image->move(FCPATH . 'uploads/perfil', $newName);
+
+                    // Atualizar o banco com o novo caminho da imagem
+                    $usuarioData = [
+                        'id' => $id,
+                        'foto' => $newName,
+                    ];
+
+                    if ($this->usuarioModel->save($usuarioData)) {
+                        session()->setFlashdata('success', 'Foto alterada com sucesso!');
+                    } else {
+                        session()->setFlashdata('error', 'Erro ao alterar a foto.');
+                    }
+                } else {
+                    session()->setFlashdata('error', 'Usuário não encontrado.');
+                }
+            } else {
+                session()->setFlashdata('error', 'Arquivo de imagem inválido.');
+            }
+
+            // Redirecionar para a página de perfil ou a URL desejada
+            return redirect()->to(base_url('Login/logout'));  // Ajuste para a URL do perfil do usuário
+        }
+        // Se não for uma requisição POST, apenas exibir a página com o formulário
     }
 }

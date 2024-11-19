@@ -53,6 +53,7 @@ class Login extends Controller
         $this->session->set('email', $email);
         $this->session->set('nome', $usuario['nome']);
         $this->session->set('id', $usuario['id']);
+        $this->session->set('foto', $usuario['foto']);
         $this->session->set('tipo_usuario', UsuarioModel::TIPOUSUARIO[$usuario['tipo_usuario']]);
         // Redirecionar para o dashboard
         session()->setFlashdata('success', 'Login realizado com sucesso!');

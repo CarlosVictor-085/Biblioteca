@@ -108,7 +108,7 @@
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                 aria-expanded="false">
                                 <div class="avatar avatar-online">
-                                    <img src="<?= base_url('assets/img/avatars/avatar.png') ?>" alt
+                                    <img src="<?= base_url('uploads/perfil/' . (session()->get('foto') ? session()->get('foto') : 'avatar.png')) ?>" alt
                                         class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </a>
@@ -116,12 +116,19 @@
                                 style="position: absolute; left: -250px; top: 100%; z-index: 1000;">
                                 <!-- Itens do menu -->
                                 <a class="dropdown-item"
-                                    href="<?= base_url('Usuario/editar/' . session()->get('id')); ?>">
+                                    href="">
                                     <div class="d-flex">
                                         <div class="flex-shrink-0 me-3">
                                             <div class="avatar avatar-online">
-                                                <img src="<?= base_url('assets/img/avatars/avatar.png') ?>" alt
+                                            <?php if (session()->get('foto') == null): ?>
+                                                <img src="<?= base_url('assets/img/avatars/avatar.png') ?>"
+                                                    alt
                                                     class="w-px-40 h-auto rounded-circle" />
+                                            <?php else: ?>
+                                                <img src="<?= base_url('uploads/perfil/' . (session()->get('foto') ? session()->get('foto') : 'avatar.png')) ?>"
+                                                    alt
+                                                    class="w-px-40 h-auto rounded-circle" />
+                                            <?php endif; ?>
                                             </div>
                                         </div>
                                         <div class="flex-grow-1">
@@ -131,6 +138,17 @@
                                         </div>
                                     </div>
                                 </a>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:void(0);"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalAlterarFoto">
+                                        <i class="bx bx-photo-album me-2"></i>
+                                        <span class="align-middle">Alterar Foto</span>
+                                    </a>
+                                </li>
                                 <li>
                                     <div class="dropdown-divider"></div>
                                 </li>
@@ -189,6 +207,28 @@
                     </div>
                 </div>
             </div>
+            <!-- View: usuario/alterar_foto.php -->
+            <div class="modal fade" id="modalAlterarFoto" tabindex="-1" aria-labelledby="modalAlterarFotoLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalAlterarFotoLabel">Alterar Foto de Perfil</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <?= form_open(base_url('Usuario/alterarFoto/' . session()->get('id')), ['method' => 'post', 'enctype' => 'multipart/form-data']) ?>
+                            <?= csrf_field() ?>
+                            <div class="mb-3">
+                                <label for="foto" class="form-label">Escolha uma nova foto</label>
+                                <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <?= form_close() ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <script>
                 // Função para formatar a primeira letra em maiúscula
