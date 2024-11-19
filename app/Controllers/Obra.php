@@ -250,7 +250,7 @@ class Obra extends BaseController
         // Definindo a fonte e o tamanho para o título e total de obras
         $pdf->SetFont('helvetica', 'B', 16);
         $pdf->Cell(0, 10, 'Relatório de Todas as Obras', 0, 1, 'C');
-        if (empty($emprestimos)) {
+        if (empty($totalObras)) {
             // Se não houver empréstimos, exibe "Nada consta"
             $pdf->SetFont('helvetica', 'I', 12);
             $pdf->Cell(0, 8, 'Nada consta', 0, 1, 'L');
