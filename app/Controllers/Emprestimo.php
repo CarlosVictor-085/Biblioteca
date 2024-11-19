@@ -327,13 +327,13 @@ class Emprestimo extends BaseController
         $pdf->SetFont('helvetica', 'B', 16);
         $pdf->Cell(0, 10, 'Relatório de Empréstimos Devolvidos', 0, 1, 'C');
 
-        $pdf->Cell(0, 0, '', 'B');
-        $pdf->Ln(5); // Espaço
         if (empty($emprestimos)) {
             // Se não houver empréstimos, exibe "Nada consta"
             $pdf->SetFont('helvetica', 'I', 12);
             $pdf->Cell(0, 8, 'Nada consta', 0, 1, 'L');
         } else {
+            $pdf->Cell(0, 0, '', 'B');
+            $pdf->Ln(5); // Espaço
             $pdf->SetFont('helvetica', '', 10);
             $pdf->Ln(5); // Espaço
 
