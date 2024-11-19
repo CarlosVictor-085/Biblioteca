@@ -250,7 +250,11 @@ class Obra extends BaseController
         // Definindo a fonte e o tamanho para o título e total de obras
         $pdf->SetFont('helvetica', 'B', 16);
         $pdf->Cell(0, 10, 'Relatório de Todas as Obras', 0, 1, 'C');
-
+        if (empty($emprestimos)) {
+            // Se não houver empréstimos, exibe "Nada consta"
+            $pdf->SetFont('helvetica', 'I', 12);
+            $pdf->Cell(0, 8, 'Nada consta', 0, 1, 'L');
+        } else {
         $pdf->SetFont('helvetica', '', 12);
         $pdf->Cell(0, 8, 'Total de Obras: ' . $totalObras, 0, 1, '');
 
@@ -261,11 +265,6 @@ class Obra extends BaseController
         $pdf->SetFont('helvetica', '', 12);
         $pdf->Cell(0, 8, 'Detalhes De Obras:', 0, 1, 'L');
         $pdf->Ln(5); // Espaço
-        if (empty($emprestimos)) {
-            // Se não houver empréstimos, exibe "Nada consta"
-            $pdf->SetFont('helvetica', 'I', 12);
-            $pdf->Cell(0, 8, 'Nada consta', 0, 1, 'L');
-        } else {
             // Cria o cabeçalho da tabela
             $pdf->SetFont('helvetica', 'B', 10);
             $html = '

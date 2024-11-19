@@ -225,6 +225,7 @@ class Emprestimo extends BaseController
 
         $pdf->Cell(0, 0, '', 'B');
         $pdf->Ln(5); // Espaço
+
         if (empty($emprestimos)) {
             // Se não houver empréstimos, exibe "Nada consta"
             $pdf->SetFont('helvetica', 'I', 12);
