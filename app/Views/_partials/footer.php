@@ -14,8 +14,9 @@
             </div>
         </div>
         <script>
-const alertIconUrl = '<?= base_url('assets/img/sga.png') ?>';
+            const alertIconUrl = '<?= base_url('assets/img/sga.png') ?>';
         </script>
+        <script src="<?= base_url('assets/jquery/require.js') ?>"></script>
         </body>
 
         </html>

@@ -51,6 +51,7 @@
 <link rel="stylesheet" href="<?= base_url('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') ?>" />
 <link rel="stylesheet" href="<?= base_url('assets/css/coluna.css') ?>" />
 <link rel="stylesheet" href="<?= base_url('assets/css/alerta.css') ?>" />
+<link rel="stylesheet" href="<?= base_url('assets/css/require.css') ?>" />
 <script src="<?= base_url('assets/vendor/js/helpers.js') ?>"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM3xqq1ziBvJ6czN6kXslFtnQ9V7XK1GfH8X7G" crossorigin="anonymous">
