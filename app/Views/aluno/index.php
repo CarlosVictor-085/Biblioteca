@@ -132,7 +132,7 @@
             </div>
         </div>
         <?= form_close() ?>
-    </div>
+    </div> 
 </div>
 
 <!-- Modal -->
@@ -143,9 +143,10 @@
                 <h5 class="modal-title" id="uploadModalLabel">Importar Planilha Excel</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body"> <?= form_open_multipart('excel/import') ?> <?= csrf_field() ?> <div class="mb-3"> <label for="file" class="form-label">Selecione a planilha Excel:</label> <input type="file" class="form-control" id="file" name="file" required> </div>
-                <div class="d-flex justify-content-end"> 
-                    <button type="submit" class="btn btn-primary">Importar</button> </div> <?= form_close() ?>
+                <div class="d-flex justify-content-between mb-3">
+                    <button type="submit" class="btn btn-primary">Importar</button>
                     <a href="<?= base_url('excel/generate') ?>" class="btn btn-success">Baixar Modelo</a>
+                </div> <?= form_close() ?>
             </div>
         </div>
     </div>

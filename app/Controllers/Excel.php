@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory; // Adicionado: Importação da IOFactory
 use CodeIgniter\Controller;
 use CodeIgniter\Database\Config;
 
@@ -20,20 +21,20 @@ class Excel extends Controller
         $sheet->setCellValue('C1', 'Email');
         $sheet->setCellValue('D1', 'Telefone');
         $sheet->setCellValue('E1', 'Turma');
-
-        // Salvar a planilha no sistema
+    
+        // Salvar a planilha em um caminho temporário
         $writer = new Xlsx($spreadsheet);
-        $filePath = WRITEPATH . 'uploads/modelo_alunos.xlsx';
+        $filePath = sys_get_temp_dir() . '/modelo_alunos.xlsx';
         $writer->save($filePath);
-
-        // Forçar download da planilha
-        return $this->response->download($filePath, null)->setFileName('modelos_para_incerir_alunos.xlsx');
+    
+        // Forçar o download da planilha
+        return $this->response->download($filePath, null)->setFileName('modelos_para_inserir_alunos.xlsx');
     }
-
+    
     public function import()
     {
         if ($file = $this->request->getFile('file')) {
-            if ($file->isValid() && ! $file->hasMoved()) {
+            if ($file->isValid() && !$file->hasMoved()) {
                 $filePath = $file->getTempName();
                 
                 // Carregar o arquivo Excel
@@ -44,24 +45,28 @@ class Excel extends Controller
                 $db = Config::connect();
                 $builder = $db->table('aluno');
                 
-                // Loop pelas linhas do Excel
-                foreach ($worksheet->getRowIterator() as $row) {
+                // Loop pelas linhas do Excel, começando da segunda linha
+                $startRow = 2;
+                foreach ($worksheet->getRowIterator($startRow) as $row) {
                     $cellIterator = $row->getCellIterator();
                     $cellIterator->setIterateOnlyExistingCells(false); 
 
                     $data = [];
                     foreach ($cellIterator as $cell) {
-                        $data[] = $cell->getValue();
+                        $data[] = trim($cell->getValue());
                     }
-                    
-                    // Inserir dados no banco de dados
-                    $builder->insert([
-                        'nome' => $data[0],
-                        'cpf' => $data[1],
-                        'email' => $data[2],
-                        'telefone' => $data[3],
-                        'turma' => $data[4],
-                    ]);
+
+                    // Verificar se as colunas obrigatórias não estão vazias
+                    if (!empty($data[0]) && !empty($data[1]) && !empty($data[2]) && !empty($data[3]) && !empty($data[4])) {
+                        // Inserir dados no banco de dados
+                        $builder->insert([
+                            'nome' => $data[0],
+                            'cpf' => $data[1],
+                            'email' => $data[2],
+                            'telefone' => $data[3],
+                            'turma' => $data[4],
+                        ]);
+                    }
                 }
 
                 session()->setFlashdata('success', 'Importação concluída!');
@@ -72,11 +77,7 @@ class Excel extends Controller
             session()->setFlashdata('error', 'Nenhum arquivo foi enviado.');
         }
 
-        return redirect()->to('excel/view');
-    }
-
-    public function view()
-    {
-        return view('import_excel');
+        // Redirecionar para a página "Aluno"
+        return redirect()->to('Aluno');
     }
 }
