@@ -120,15 +120,15 @@
                                     <div class="d-flex">
                                         <div class="flex-shrink-0 me-3">
                                             <div class="avatar avatar-online">
-                                            <?php if (session()->get('foto') == null): ?>
-                                                <img src="<?= base_url('assets/img/avatars/avatar.png') ?>"
-                                                    alt
-                                                    class="w-px-40 h-auto rounded-circle" />
-                                            <?php else: ?>
-                                                <img src="<?= base_url('uploads/perfil/' . (session()->get('foto') ? session()->get('foto') : 'avatar.png')) ?>"
-                                                    alt
-                                                    class="w-px-40 h-auto rounded-circle" />
-                                            <?php endif; ?>
+                                                <?php if (session()->get('foto') == null): ?>
+                                                    <img src="<?= base_url('assets/img/avatars/avatar.png') ?>"
+                                                        alt
+                                                        class="w-px-40 h-auto rounded-circle" />
+                                                <?php else: ?>
+                                                    <img src="<?= base_url('uploads/perfil/' . (session()->get('foto') ? session()->get('foto') : 'avatar.png')) ?>"
+                                                        alt
+                                                        class="w-px-40 h-auto rounded-circle" />
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                         <div class="flex-grow-1">
@@ -149,6 +149,16 @@
                                         <span class="align-middle">Alterar Foto</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<?= base_url('Usuario/excluirFoto/' . session()->get('id')) ?>">
+                                        <i class="bx bx-image me-2"></i>
+                                        <span class="align-middle">Excluir Foto</span>
+                                    </a>
+                                </li>
+
                                 <li>
                                     <div class="dropdown-divider"></div>
                                 </li>
@@ -224,6 +234,11 @@
                             </div>
                             <button type="submit" class="btn btn-primary">Salvar</button>
                             <?= form_close() ?>
+                            <div class="d-flex justify-content-end mt-3">
+                                <a href="<?= base_url('Usuario/excluirFoto/' . session()->get('id')) ?>" class="btn btn-danger ms-auto">
+                                    Excluir Foto
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

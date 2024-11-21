@@ -181,4 +181,35 @@ class Usuario extends BaseController
         }
         // Se não for uma requisição POST, apenas exibir a página com o formulário
     }
+
+    public function excluirFoto($id)
+    {
+        // Buscar o usuário no banco de dados
+        $usuario = $this->usuarioModel->find($id);
+
+        if ($usuario) {
+            // Verificar se o usuário tem uma foto cadastrada
+            if (!empty($usuario['foto']) && file_exists(FCPATH . 'uploads/perfil/' . $usuario['foto'])) {
+                // Deletar a foto do diretório
+                unlink(FCPATH . 'uploads/perfil/' . $usuario['foto']);
+            }
+
+            // Atualizar o campo 'foto' no banco de dados para null ou vazio
+            $usuarioData = [
+                'id' => $id,
+                'foto' => null, // Define como null (ou vazio) para indicar a ausência de foto
+            ];
+
+            if ($this->usuarioModel->save($usuarioData)) {
+                session()->setFlashdata('success', 'Foto excluída com sucesso!');
+            } else {
+                session()->setFlashdata('error', 'Erro ao atualizar o registro no banco de dados.');
+            }
+        } else {
+            session()->setFlashdata('error', 'Usuário não encontrado.');
+        }
+
+        // Redirecionar para a página de perfil ou outra URL desejada
+        return redirect()->to(base_url('Login/logout')); // Ajuste para a URL do perfil ou dashboard
+    }
 }
