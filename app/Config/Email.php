@@ -14,9 +14,9 @@ class Email extends BaseConfig
 
 {
 
-    public string $fromEmail  = 'carlos.correia16@aluno.ce.gov.br';
+    public string $fromEmail  = '';
 
-    public string $fromName   = 'Carlos Victor';
+    public string $fromName   = '';
 
     public string $recipients = '';
 
@@ -68,7 +68,7 @@ class Email extends BaseConfig
 
      */
 
-    public string $SMTPUser = 'carlosvictorrodrigues13@gmail.com';
+    public string $SMTPUser = '';
 
 
 
@@ -78,7 +78,7 @@ class Email extends BaseConfig
 
      */
 
-    public string $SMTPPass = 'lrkt tgih hlvv wicb';
+    public string $SMTPPass = '*****';
 
 
 
