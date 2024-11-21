@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use CodeIgniter\Controller;
 use CodeIgniter\Database\Config;
 
-class ExcelController extends Controller
+class Excel extends Controller
 {
     public function generate()
     {
