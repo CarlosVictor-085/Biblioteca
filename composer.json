@@ -15,6 +15,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.9",
+        "phpoffice/phpspreadsheet": "^3.4",
         "psr/log": "^1.1",
         "tecnickcom/tcpdf": "^6.7"
     },

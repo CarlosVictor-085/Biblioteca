@@ -1,10 +1,14 @@
 <div class="container">
     <h2>Aluno</h2>
     <!-- Button do Modal de Cadastro de Aluno -->
-    <button type="button" class="btn btn-primary d-grid" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Novo
-    </button>
-    <br>
+    <div class="d-flex justify-content-between mb-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Novo
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+            Importar Planilha
+        </button>
+    </div>
     <!-- Tabela de Aluno -->
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -22,54 +26,54 @@
                 </thead>
                 <tbody>
                     <?php foreach ($listaAlunos as $au) : ?>
-                    <tr>
-                        <td class="text-start">
-                            <?= $au['id'] ?>
-                        </td>
-                        <td class="text-center">
-                            <?= $au['nome'] ?>
-                        </td>
-                        <td class="text-center">
-                            <?= $au['cpf'] ?>
-                        </td>
-                        <td class="text-center">
-                            <?= $au['email'] ?>
-                        </td>
-                        <td class="text-center">
-                            <?= $au['telefone'] ?>
-                        </td>
-                        <td class="text-center">
-                            <?= $au['turma'] ?>
-                        </td>
-                        <td class="text-center">
-                            <div class="dropdown">
-                                <a class="text-primary" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class='bx bx-dots-vertical-rounded'></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item text-info"
-                                            href="<?= base_url('Aluno/editar/' . $au['id']) ?>">
-                                            <i class="fas fa-pen"></i> Editar
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-danger delete-link" data-id="<?= $au['id'] ?>"
-                                            href="#">
-                                            <i class="fas fa-trash"></i> Excluir
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-warning"
-                                            href="<?= base_url('Aluno/gerarRelatorioPDF/' . $au['id']) ?>"
-                                            target="_blank">
-                                            <i class="fas fa-file-pdf"></i> Gerar Relatório de Empréstimos do Aluno
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="text-start">
+                                <?= $au['id'] ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $au['nome'] ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $au['cpf'] ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $au['email'] ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $au['telefone'] ?>
+                            </td>
+                            <td class="text-center">
+                                <?= $au['turma'] ?>
+                            </td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <a class="text-primary" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class='bx bx-dots-vertical-rounded'></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item text-info"
+                                                href="<?= base_url('Aluno/editar/' . $au['id']) ?>">
+                                                <i class="fas fa-pen"></i> Editar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger delete-link" data-id="<?= $au['id'] ?>"
+                                                href="#">
+                                                <i class="fas fa-trash"></i> Excluir
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-warning"
+                                                href="<?= base_url('Aluno/gerarRelatorioPDF/' . $au['id']) ?>"
+                                                target="_blank">
+                                                <i class="fas fa-file-pdf"></i> Gerar Relatório de Empréstimos do Aluno
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
                     <?php endforeach ?>
                 </tbody>
             </table>
@@ -129,6 +133,23 @@
         </div>
         <?= form_close() ?>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadModalLabel">Importar Planilha Excel</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"> <?= form_open_multipart('excel/import') ?> <?= csrf_field() ?> <div class="mb-3"> <label for="file" class="form-label">Selecione a planilha Excel:</label> <input type="file" class="form-control" id="file" name="file" required> </div>
+                <div class="d-flex justify-content-end"> 
+                    <button type="submit" class="btn btn-primary">Importar</button> </div> <?= form_close() ?>
+                    <a href="<?= base_url('excel/generate') ?>" class="btn btn-success">Baixar Modelo</a>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <!-- Formulário de exclusão de Aluno-->
