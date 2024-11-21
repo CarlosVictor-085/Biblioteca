@@ -234,11 +234,6 @@
                             </div>
                             <button type="submit" class="btn btn-primary">Salvar</button>
                             <?= form_close() ?>
-                            <div class="d-flex justify-content-end mt-3">
-                                <a href="<?= base_url('Usuario/excluirFoto/' . session()->get('id')) ?>" class="btn btn-danger ms-auto">
-                                    Excluir Foto
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
