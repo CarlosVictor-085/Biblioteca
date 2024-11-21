@@ -132,7 +132,7 @@
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-        <?= form_open("Usuario/cadastrar") ?>
+    <?= form_open("Usuario/cadastrar", ['id' => 'meuFormulario']) ?>
 
         <div class="modal-dialog">
 
@@ -159,8 +159,8 @@
                     <div class="form-group">
 
                         <label class="form-label" for="e-mail">Email:</label>
-
                         <input class='form-control' type="text" id='email' name='email'>
+                        <div id="emailError" class="text-danger" style="display: none;">E-mail inválido ou já registrado.</div>
 
                     </div>
 
@@ -261,3 +261,4 @@
 
 
 <script src="<?= base_url('assets/jquery/exclusaodeusuario.js') ?>"></script>
+<script src="<?= base_url('assets/jquery/verificaçaoemail.js') ?>"></script>

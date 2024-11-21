@@ -49,11 +49,21 @@ class Usuario extends BaseController
 
     public function cadastrar()
     {
-        // Gerar uma senha aleatória
-        $senhaGerada = bin2hex(random_bytes(4));  // Gerando uma senha de 8 caracteres (4 bytes)
-
         // Pegando os dados do formulário
         $usuario = $this->request->getPost();
+        $email = $usuario['email'];  // Pegando o e-mail do formulário
+
+        // Verificar se o e-mail já está registrado no banco
+        $usuarioExistente = $this->usuarioModel->where('email', $email)->first();
+
+        if ($usuarioExistente) {
+            // Se o e-mail já estiver registrado, exibe mensagem de erro
+            session()->setFlashdata('error', 'E-mail já registrado. Tente outro e-mail.');
+            return redirect()->back()->withInput();
+        }
+
+        // Gerar uma senha aleatória
+        $senhaGerada = bin2hex(random_bytes(4));  // Gerando uma senha de 8 caracteres (4 bytes)
 
         // Adicionando a senha gerada ao array de dados
         $usuario['senha'] = $senhaGerada;
@@ -70,6 +80,7 @@ class Usuario extends BaseController
 
         return redirect()->to(previous_url());
     }
+
 
     protected function enviarEmailSenha($email, $senha, $nome)
     {

@@ -82,5 +82,5 @@ class Excel extends Controller
         return redirect()->to('Aluno');
     }
 
-
+    
 }
