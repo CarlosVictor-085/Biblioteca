@@ -4,4 +4,6 @@ writable/session/*
 
 html/
 
-Config/Email.php
+/Config/Email.php
+
+/public/uploads/
