@@ -221,8 +221,8 @@ class ComposerStaticInit38014e3bbbc6937863b8a832d62cd5e9
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -338,7 +338,7 @@ class ComposerStaticInit38014e3bbbc6937863b8a832d62cd5e9
         'App\\Controllers\\BaseController' => __DIR__ . '/../..' . '/app/Controllers/BaseController.php',
         'App\\Controllers\\Editora' => __DIR__ . '/../..' . '/app/Controllers/Editora.php',
         'App\\Controllers\\Emprestimo' => __DIR__ . '/../..' . '/app/Controllers/Emprestimo.php',
-        'App\\Controllers\\ExcelController' => __DIR__ . '/../..' . '/app/Controllers/ExcelController.php',
+        'App\\Controllers\\Excel' => __DIR__ . '/../..' . '/app/Controllers/Excel.php',
         'App\\Controllers\\Home' => __DIR__ . '/../..' . '/app/Controllers/Home.php',
         'App\\Controllers\\Livro' => __DIR__ . '/../..' . '/app/Controllers/Livro.php',
         'App\\Controllers\\Login' => __DIR__ . '/../..' . '/app/Controllers/Login.php',

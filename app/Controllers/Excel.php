@@ -6,6 +6,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory; // Adicionado: Importação da IOFactory
 use CodeIgniter\Controller;
+use Faker\Factory;
 use CodeIgniter\Database\Config;
 
 class Excel extends Controller
@@ -80,4 +81,6 @@ class Excel extends Controller
         // Redirecionar para a página "Aluno"
         return redirect()->to('Aluno');
     }
+
+
 }

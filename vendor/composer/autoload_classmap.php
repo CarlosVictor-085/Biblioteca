@@ -11,7 +11,7 @@ return array(
     'App\\Controllers\\BaseController' => $baseDir . '/app/Controllers/BaseController.php',
     'App\\Controllers\\Editora' => $baseDir . '/app/Controllers/Editora.php',
     'App\\Controllers\\Emprestimo' => $baseDir . '/app/Controllers/Emprestimo.php',
-    'App\\Controllers\\ExcelController' => $baseDir . '/app/Controllers/ExcelController.php',
+    'App\\Controllers\\Excel' => $baseDir . '/app/Controllers/Excel.php',
     'App\\Controllers\\Home' => $baseDir . '/app/Controllers/Home.php',
     'App\\Controllers\\Livro' => $baseDir . '/app/Controllers/Livro.php',
     'App\\Controllers\\Login' => $baseDir . '/app/Controllers/Login.php',
