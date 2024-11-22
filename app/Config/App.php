@@ -140,7 +140,7 @@ class App extends BaseConfig
 
      */
 
-    public string $defaultLocale = 'en';
+    public string $defaultLocale = 'pt';
 
 
 
@@ -349,5 +349,4 @@ class App extends BaseConfig
      */
 
     public bool $CSPEnabled = false;
-
 }
