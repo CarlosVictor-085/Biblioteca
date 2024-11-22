@@ -135,9 +135,13 @@ class Usuario extends BaseController
 
     public function excluir()
     {
-        $usuario = $this->request->getPost();
-        // Tenta excluir o usuário e exibe mensagem de sucesso ou erro
-        if ($this->usuarioModel->delete($usuario)) {
+        $id = $this->request->getPost('id'); // Obtém o ID do POST
+        if (!$id) {
+            throw new \InvalidArgumentException("ID não fornecido.");
+        }
+    
+        // Lógica para excluir o usuário
+        if ($this->usuarioModel->delete($id)) {
             session()->setFlashdata('error', 'Usuário excluído com sucesso.');
         } else {
             session()->setFlashdata('error', 'Erro ao excluir o usuário.');

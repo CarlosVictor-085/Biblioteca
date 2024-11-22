@@ -259,6 +259,5 @@
 </div>
 
 
-
-<script src="<?= base_url('assets/jquery/exclusaodeusuario.js') ?>"></script>
 <script src="<?= base_url('assets/jquery/verificaçaoemail.js') ?>"></script>
+<script src="<?= base_url('assets/jquery/exclusaodeusuario.js') ?>"></script>
