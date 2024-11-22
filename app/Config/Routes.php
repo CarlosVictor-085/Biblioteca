@@ -18,7 +18,5 @@ $routes->post('/login/authenticate', 'Login::authenticate');
 
 $routes->get('/logout', 'Login::logout');
 
-
-
 //$routes->setAutoRoute(true);
 
