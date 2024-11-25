@@ -55,8 +55,8 @@
     <!-- Erro -->
     <div class="container-xxl container-p-y">
         <div class="misc-wrapper">
-            <h2 class="mb-2 mx-2">Página Não Encontrada :(</h2>
-            <p class="mb-4 mx-2">Ops! 😖 A URL solicitada não foi encontrada neste servidor.</p>
+            <h2 class="mb-2 mx-2">Página Não Encontrada</h2>
+            <p class="mb-4 mx-2">Ops! A URL solicitada não foi encontrada neste servidor.</p>
 
             <!-- Exibindo a mensagem de erro condicionalmente -->
             <?php if (ENVIRONMENT !== 'production') : ?>
