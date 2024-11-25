@@ -42,7 +42,7 @@
             <h2 class="mb-2"><?= lang('Errors.whoops') ?></h2>
             <p class="mb-4"><?= lang('Errors.weHitASnag') ?></p>
 
-            <a href="<?= base_url() ?>" class="btn btn-primary">Voltar para a página inicial</a>
+            <a href="<?= base_url(previous_url()) ?>" class="btn btn-primary">Voltar para a página inicial</a>
 
             <div class="mt-3">
                 <img
