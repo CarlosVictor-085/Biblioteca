@@ -65,7 +65,7 @@
                 <p><?= lang('Errors.sorryCannotFind') ?></p>
             <?php endif; ?>
 
-            <a href="<?= previous_url() ?>" class="btn btn-primary">Voltar para a página inicial</a>
+            <a href="<?= previous_url() ?>" class="btn btn-primary">Voltar</a>
             <div class="mt-3">
                 <img
                     src="<?= base_url('assets/img/illustrations/page-misc-error-light.png') ?>"
