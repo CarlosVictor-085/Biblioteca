@@ -46,7 +46,7 @@
 
             <div class="mt-3">
                 <img
-                    src="<?= base_url('assets/img/illustrations/page-misc-error-light.png') ?>"
+                    src="<?= base_url('assets/img/illustrations/girl-doing-yoga-light.png') ?>"
                     alt="error-illustration"
                     width="500"
                     class="img-fluid"
