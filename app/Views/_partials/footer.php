@@ -22,14 +22,29 @@
         </html>
 
         <script src=" <?= base_url('assets/jquery/jquery.js') ?>"></script>
+        <script src="<?= base_url('assets/vendor/libs/jquery/jquery.js') ?>"></script>
+        <script src="<?= base_url('assets/vendor/libs/popper/popper.js') ?>"></script>
+        <script src="<?= base_url('assets/vendor/js/bootstrap.js') ?>"></script>
+        <script src="<?= base_url('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') ?>">
+        </script>
+        <script src="<?= base_url('assets/vendor/js/menu.js') ?>"></script>
+        <!-- endbuild -->
+        <!-- Vendors JS -->
+        <script src="<?= base_url('assets/vendor/libs/apex-charts/apexcharts.js') ?>"></script>
+        <!-- Main JS -->
+        <script src="<?= base_url('assets/js/main.js') ?>"></script>
+        <!-- Page JS -->
+        <script src="<?= base_url('assets/js/dashboards-analytics.js') ?>"></script>
+        <!-- Place this tag in your head or just before your close body tag. -->
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
         <script src="<?= base_url('assets/bootstrap/js/bootstrap.bundle.js') ?>"></script>
+        <script src="<?= base_url('assets/jquery/menuhamburguer.js') ?>"></script>
         <script src="<?= base_url('assets/jquery/olho.js') ?>"></script>
         <script src="<?= base_url('assets/jquery/cpf.js') ?>"></script>
         <script src="<?= base_url('assets/jquery/menuitem.js') ?>"></script>
         <script src="<?= base_url('assets/jquery/user.js') ?>"></script>
         <script src="<?= base_url('assets/jquery/telefone.js') ?>"></script>
         <script src="<?= base_url('assets/jquery/datatable.js') ?>"></script>
-        <script src="<?= base_url('assets/jquery/menuhamburguer.js') ?>"></script>
         <script src="<?= base_url('assets/jquery/barradecarregamento.js') ?>"></script>
         <script src="<?= base_url('assets/js/pt-BR.json') ?>"></script>
         <script src="<?= base_url('assets/jquery/tombo.js') ?>"></script>
@@ -37,6 +52,7 @@
         <script src="<?= base_url('assets/jquery/select2.js') ?>"></script>
         <script src="<?= base_url('assets/jquery/alert.js') ?>"></script>
         <script src="<?= base_url('assets/jquery/menuitemopen.js') ?>"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js">
         </script>
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
