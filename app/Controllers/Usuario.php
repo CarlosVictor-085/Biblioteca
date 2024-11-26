@@ -118,7 +118,7 @@ class Usuario extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao atualizar o usuário.');
         }
-        return redirect()->to('Usuario/index');
+        return redirect()->to('Usuario');
     }
 
     public function salvarsenha()
@@ -130,7 +130,7 @@ class Usuario extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao atualizar a senha.');
         }
-        return redirect()->to('Usuario/index');
+        return redirect()->to('Usuario');
     }
 
     public function excluir()
@@ -146,7 +146,7 @@ class Usuario extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao excluir o usuário.');
         }
-        return redirect()->to('Usuario/index');
+        return redirect()->to('Usuario');
     }
 
     public function alterarFoto($id)

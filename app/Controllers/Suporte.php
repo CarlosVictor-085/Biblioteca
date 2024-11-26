@@ -37,6 +37,6 @@ class Suporte extends BaseController
             session()->setFlashdata('error', 'Erro ao enviar a mensagem.');
             //log_message('error', $emailService->printDebugger(['headers']));
         }
-        return redirect()->to('Suporte/index');
+        return redirect()->to('Suporte');
     }
 }

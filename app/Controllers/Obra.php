@@ -67,7 +67,7 @@ class Obra extends BaseController
                 $this->livroModel->save($dataLivro); // Salva cada livro com seu tombo
             }
         }
-        return redirect()->to('Obra/index')->with('success', 'Obra e livros cadastrados com sucesso!');
+        return redirect()->to('Obra')->with('success', 'Obra e livros cadastrados com sucesso!');
     }
 
     public function editar($id)
@@ -148,7 +148,7 @@ class Obra extends BaseController
                 }
             }
         }
-        return redirect()->to('Obra/index')->with('success', 'Obra e livros atualizados com sucesso!');
+        return redirect()->to('Obra')->with('success', 'Obra e livros atualizados com sucesso!');
     }
 
     public function excluir()
