@@ -37,12 +37,12 @@
                 </li>
 
                 <?php if (session()->get('tipo_usuario') == 'Administrador'): ?>
-                    <li class="menu-item" id="targetMenuItem">
-                        <a href="<?= base_url('Usuario/index') ?>" class="menu-link">
-                            <i class="menu-icon tf-icons bx bxs-user"></i>
-                            <div data-i18n="Analytics">Usuario</div>
-                        </a>
-                    </li>
+                <li class="menu-item" id="targetMenuItem">
+                    <a href="<?= base_url('Usuario/index') ?>" class="menu-link">
+                        <i class="menu-icon tf-icons bx bxs-user"></i>
+                        <div data-i18n="Analytics">Usuario</div>
+                    </a>
+                </li>
                 <?php endif; ?>
 
                 <li class="menu-item" id="targetMenuItem">
@@ -108,26 +108,23 @@
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                 aria-expanded="false">
                                 <div class="avatar avatar-online">
-                                    <img src="<?= base_url('uploads/perfil/' . (session()->get('foto') ? session()->get('foto') : 'avatar.png')) ?>" alt
-                                        class="w-px-40 h-auto rounded-circle" />
+                                    <img src="<?= base_url('uploads/perfil/' . (session()->get('foto') ? session()->get('foto') : 'avatar.png')) ?>"
+                                        alt class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end"
                                 style="position: absolute; left: -250px; top: 100%; z-index: 1000;">
                                 <!-- Itens do menu -->
-                                <a class="dropdown-item"
-                                    href="">
+                                <a class="dropdown-item" href="">
                                     <div class="d-flex">
                                         <div class="flex-shrink-0 me-3">
                                             <div class="avatar avatar-online">
                                                 <?php if (session()->get('foto') == null): ?>
-                                                    <img src="<?= base_url('assets/img/avatars/avatar.png') ?>"
-                                                        alt
-                                                        class="w-px-40 h-auto rounded-circle" />
+                                                <img src="<?= base_url('assets/img/avatars/avatar.png') ?>" alt
+                                                    class="w-px-40 h-auto rounded-circle" />
                                                 <?php else: ?>
-                                                    <img src="<?= base_url('uploads/perfil/' . (session()->get('foto') ? session()->get('foto') : 'avatar.png')) ?>"
-                                                        alt
-                                                        class="w-px-40 h-auto rounded-circle" />
+                                                <img src="<?= base_url('uploads/perfil/' . (session()->get('foto') ? session()->get('foto') : 'avatar.png')) ?>"
+                                                    alt class="w-px-40 h-auto rounded-circle" />
                                                 <?php endif; ?>
                                             </div>
                                         </div>
@@ -141,24 +138,33 @@
                                 <li>
                                     <div class="dropdown-divider"></div>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item" href="javascript:void(0);"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modalAlterarFoto">
+                                <li class="dropdown">
+                                    <a class="dropdown-item dropdown-toggle" href="javascript:void(0);"
+                                        id="dropdownFotoPerfil" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
                                         <i class="bx bx-photo-album me-2"></i>
-                                        <span class="align-middle">Alterar Foto</span>
+                                        Foto de Perfil
                                     </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownFotoPerfil">
+                                        <li>
+                                            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                                                data-bs-target="#modalAlterarFoto">
+                                                <i class="bx bx-image me-2"></i>
+                                                Alterar Foto
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item"
+                                                href="<?= base_url('Usuario/excluirFoto/' . session()->get('id')) ?>">
+                                                <i class="bx bx-image me-2"></i>
+                                                Excluir Foto
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="<?= base_url('Usuario/excluirFoto/' . session()->get('id')) ?>">
-                                        <i class="bx bx-image me-2"></i>
-                                        <span class="align-middle">Excluir Foto</span>
-                                    </a>
-                                </li>
-
                                 <li>
                                     <div class="dropdown-divider"></div>
                                 </li>
@@ -178,13 +184,13 @@
             <!---Barra de Pesquisa e Navegação de usuario--->
             <!-- Core JS -->
             <!-- buid:js assets/vendor/js/core.js -->
-            
+
             <script>
-                var logoutUrl = "<?php echo base_url('login/logout'); ?>";
-                var baseUrl = "<?php echo base_url(); ?>";
+            var logoutUrl = "<?php echo base_url('login/logout'); ?>";
+            var baseUrl = "<?php echo base_url(); ?>";
             </script>
             <script>
-                var baseUrl2 = '<?php echo base_url(); ?>'; // Defina a variável baseUrl
+            var baseUrl2 = '<?php echo base_url(); ?>'; // Defina a variável baseUrl
             </script>
             <!-- Modal de Erro -->
             <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
@@ -204,12 +210,14 @@
                 </div>
             </div>
             <!-- View: usuario/alterar_foto.php -->
-            <div class="modal fade" id="modalAlterarFoto" tabindex="-1" aria-labelledby="modalAlterarFotoLabel" aria-hidden="true">
+            <div class="modal fade" id="modalAlterarFoto" tabindex="-1" aria-labelledby="modalAlterarFotoLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalAlterarFotoLabel">Alterar Foto de Perfil</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Fechar"></button>
                         </div>
                         <div class="modal-body">
                             <?= form_open(base_url('Usuario/alterarFoto/' . session()->get('id')), ['method' => 'post', 'enctype' => 'multipart/form-data']) ?>
@@ -227,51 +235,51 @@
 
 
             <script>
-                // Função para formatar a primeira letra em maiúscula
-                function capitalize(word) {
-                    return word.charAt(0).toUpperCase() + word.slice(1);
-                }
+            // Função para formatar a primeira letra em maiúscula
+            function capitalize(word) {
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            }
 
-                // Obter o caminho da URL após "public" e dividi-lo em segmentos
-                const pathArray = window.location.pathname.split('/').filter(segment => segment && segment !== 'public');
-                // Selecionar o elemento do breadcrumb
-                const breadcrumbContainer = document.getElementById('breadcrumb');
-                // Adicionar "Biblioteca" como primeiro item
-                const libraryItem = document.createElement('li');
-                libraryItem.classList.add('breadcrumb-item', 'nav-item');
-                libraryItem.textContent = 'Biblioteca';
-                breadcrumbContainer.appendChild(libraryItem);
-                // Verificar se a URL termina com "editar"
-                const isEditing = pathArray.includes('editar');
-                // Montar breadcrumbs com base nos segmentos da URL após "public"
-                pathArray.forEach((segment, index) => {
-                    const name = capitalize(segment);
-                    const url = '/public/' + pathArray.slice(0, index + 1).join('/');
-                    const listItem = document.createElement('li');
-                    listItem.classList.add('breadcrumb-item', 'nav-item');
-                    // Verificar se a URL é a página inicial (Home)
-                    if (pathArray.length === 1 && pathArray[0] === 'Home') {
-                        // Não adiciona nenhum outro item, pois já temos "Biblioteca"
+            // Obter o caminho da URL após "public" e dividi-lo em segmentos
+            const pathArray = window.location.pathname.split('/').filter(segment => segment && segment !== 'public');
+            // Selecionar o elemento do breadcrumb
+            const breadcrumbContainer = document.getElementById('breadcrumb');
+            // Adicionar "Biblioteca" como primeiro item
+            const libraryItem = document.createElement('li');
+            libraryItem.classList.add('breadcrumb-item', 'nav-item');
+            libraryItem.textContent = 'Biblioteca';
+            breadcrumbContainer.appendChild(libraryItem);
+            // Verificar se a URL termina com "editar"
+            const isEditing = pathArray.includes('editar');
+            // Montar breadcrumbs com base nos segmentos da URL após "public"
+            pathArray.forEach((segment, index) => {
+                const name = capitalize(segment);
+                const url = '/public/' + pathArray.slice(0, index + 1).join('/');
+                const listItem = document.createElement('li');
+                listItem.classList.add('breadcrumb-item', 'nav-item');
+                // Verificar se a URL é a página inicial (Home)
+                if (pathArray.length === 1 && pathArray[0] === 'Home') {
+                    // Não adiciona nenhum outro item, pois já temos "Biblioteca"
+                    return;
+                } else if (isEditing && index === pathArray.length - 1) {
+                    // Para páginas de edição
+                    listItem.classList.add('active');
+                    listItem.setAttribute('aria-current', 'page');
+                    listItem.textContent = name; // Exibe o nome do segmento
+                } else {
+                    // Para outras páginas, substituir "index" por "Início"
+                    if (name === 'Index') {
+                        // Não faz nada para não adicionar "Início" no breadcrumb
                         return;
-                    } else if (isEditing && index === pathArray.length - 1) {
-                        // Para páginas de edição
-                        listItem.classList.add('active');
-                        listItem.setAttribute('aria-current', 'page');
-                        listItem.textContent = name; // Exibe o nome do segmento
                     } else {
-                        // Para outras páginas, substituir "index" por "Início"
-                        if (name === 'Index') {
-                            // Não faz nada para não adicionar "Início" no breadcrumb
-                            return;
-                        } else {
-                            const link = document.createElement('a');
-                            link.href = url;
-                            link.textContent = name; // Mantém o nome formatado dos outros itens
-                            listItem.appendChild(link);
-                        }
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.textContent = name; // Mantém o nome formatado dos outros itens
+                        listItem.appendChild(link);
                     }
-                    breadcrumbContainer.appendChild(listItem);
-                });
+                }
+                breadcrumbContainer.appendChild(listItem);
+            });
             </script>
             <div id="preloader">
                 <div class="loading-bar">
