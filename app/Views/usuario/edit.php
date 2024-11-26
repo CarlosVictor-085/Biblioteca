@@ -28,6 +28,7 @@
                         name='telefone'>
                 </div>
             </div>
+            <?php if (session()->get('tipo_usuario') == 'Administrador'): ?>
             <div class="row p-2">
                 <div class="col-2">
                     <label class="form-label" for="nome">Tipo De Usuario</label>
@@ -42,6 +43,7 @@
                     </select>
                 </div>
             </div>
+            <?php endif; ?>
             <div class="row p-2">
                 <div class="col-2">
                     <label class="form-label" for="telefone">Atualizar Senha:</label>

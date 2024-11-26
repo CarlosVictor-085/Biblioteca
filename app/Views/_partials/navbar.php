@@ -115,7 +115,8 @@
                             <ul class="dropdown-menu dropdown-menu-end"
                                 style="position: absolute; left: -250px; top: 100%; z-index: 1000;">
                                 <!-- Itens do menu -->
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item"
+                                    href="<?= base_url('Usuario/editar/'. session()->get('id')) ?>">
                                     <div class="d-flex">
                                         <div class="flex-shrink-0 me-3">
                                             <div class="avatar avatar-online">
