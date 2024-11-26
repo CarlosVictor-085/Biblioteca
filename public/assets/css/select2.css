@@ -1,59 +1,53 @@
-/* Estilos para o Select2 */
-.select2-container--bootstrap .select2-selection--single {
-    border: 1px solid #ced4da;
-    /* Borda padrão do Bootstrap */
-    border-radius: .390rem;
-    /* Alinha com o border-radius do Bootstrap */
-    height: calc(2.25rem + 2px);
-    /* Altura do input do Bootstrap */
-    min-width: 100%;
-    /* Garante que o Select2 ocupe toda a largura disponível */
-}
-
-.select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
-    line-height: 2.25rem;
-    /* Alinha o texto verticalmente */
-}
-
-.select2-container--bootstrap .select2-selection--single .select2-selection__arrow {
-    height: calc(2.25rem + 2px);
-    /* Altura do arrow */
-    right: 10px;
-    /* Ajusta a posição do ícone da seta */
-}
-
-/* Adiciona altura máxima ao dropdown com rolagem */
-.select2-results {
-    max-height: 200px;
-    /* Altura máxima do dropdown */
-    overflow-y: auto;
-    /* Ativa a rolagem vertical */
-}
-
-/* Customização adicional */
-.custom-select {
-    position: relative;
-}
-
-.custom-select select {
-    padding-right: 30px;
-    /* Espaço para a seta */
-    height: calc(2.25rem + 2px);
-    /* Garantindo a mesma altura que os inputs do Bootstrap */
-    width: 100%;
-    /* Garante que o Select2 ocupe toda a largura do container */
-}
-
-.custom-select::after {
-    content: '▼';
-    /* Seta para baixo */
-    position: absolute;
-    right: 10px;
-    /* Espaçamento da borda direita */
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    /* Para não interferir no clique */
-    color: #6c757d;
-    /* Cor padrão do Bootstrap */
+/* Estilos para o Select2 */
+.select2-container--bootstrap .select2-selection--single {
+    border: 1px solid #ced4da;
+    /* Borda padrão do Bootstrap */
+    border-radius: .390rem;
+    /* Alinha com o border-radius do Bootstrap */
+    height: calc(2.25rem + 2px);
+    /* Altura do input do Bootstrap */
+    min-width: 100%;
+    /* Garante que o Select2 ocupe toda a largura disponível */
+}
+.select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
+    line-height: 2.25rem;
+    /* Alinha o texto verticalmente */
+}
+.select2-container--bootstrap .select2-selection--single .select2-selection__arrow {
+    height: calc(2.25rem + 2px);
+    /* Altura do arrow */
+    right: 10px;
+    /* Ajusta a posição do ícone da seta */
+}
+/* Adiciona altura máxima ao dropdown com rolagem */
+.select2-results {
+    max-height: 200px;
+    /* Altura máxima do dropdown */
+    overflow-y: auto;
+    /* Ativa a rolagem vertical */
+}
+/* Customização adicional */
+.custom-select {
+    position: relative;
+}
+.custom-select select {
+    padding-right: 30px;
+    /* Espaço para a seta */
+    height: calc(2.25rem + 2px);
+    /* Garantindo a mesma altura que os inputs do Bootstrap */
+    width: 100%;
+    /* Garante que o Select2 ocupe toda a largura do container */
+}
+.custom-select::after {
+    content: '▼';
+    /* Seta para baixo */
+    position: absolute;
+    right: 10px;
+    /* Espaçamento da borda direita */
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    /* Para não interferir no clique */
+    color: #6c757d;
+    /* Cor padrão do Bootstrap */
 }

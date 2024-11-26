@@ -14,70 +14,88 @@
         </div>
     </div>
 
-    <div class="row">
-        <!-- Cards -->
-        <div class="col-md-4 mb-4">
-            <div class="card border-start border-5 border-primary">
-                <div class="card-body text-center">
-                    <i class="fas fa-book fa-2x mb-3" style="color: #007bff;"></i>
-                    <h5 class="card-title">Livros Disponíveis</h5>
-                    <h2 class="card-text"><?= $livrosDisponiveis ?></h2>
-                </div>
-            </div>
-        </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title text-center">Estatísticas</h5>
+            <ul class="list-group list-group-flush">
+                <!-- Livros Disponíveis -->
+                <li class="list-group-item">
+                    <strong>Livros Disponíveis</strong>
+                    <div class="progress mt-2" style="height: 30px;">
+                        <div class="progress-bar" role="progressbar"
+                            style="width: <?= ($livrosDisponiveis < 1 || (($livrosDisponiveis / $valorMaximo) * 100) < 1) ? $livrosDisponiveis : (($livrosDisponiveis / $valorMaximo) * 100); ?>%; background-color: rgba(11,78,146);"
+                            aria-valuenow="<?= $livrosDisponiveis ?>" aria-valuemin="0"
+                            aria-valuemax="<?= $valorMaximo ?>">
+                            <?= $livrosDisponiveis > 0 ? $livrosDisponiveis : 'Disponível' ?>
+                        </div>
+                    </div>
+                </li>
 
-        <div class="col-md-4 mb-4">
-            <div class="card border-start border-5 border-success">
-                <div class="card-body text-center">
-                    <i class="fas fa-check-circle fa-2x mb-3" style="color: #28a745;"></i>
-                    <h5 class="card-title">Empréstimos Devolvidos</h5>
-                    <h2 class="card-text"><?= $emprestimosDevolvidos ?></h2>
-                </div>
-            </div>
-        </div>
+                <!-- Empréstimos Devolvidos -->
+                <li class="list-group-item">
+                    <strong>Empréstimos Devolvidos</strong>
+                    <div class="progress mt-2" style="height: 30px;">
+                        <div class="progress-bar" role="progressbar"
+                            style="width: <?=($emprestimosDevolvidos < 1 || (($emprestimosDevolvidos / $valorMaximo) * 100) < 1) ? $emprestimosDevolvidos : (($emprestimosDevolvidos / $valorMaximo) * 100); ?>%; background-color: rgba(40, 167, 69, 1);"
+                            aria-valuenow="<?= $emprestimosDevolvidos ?>" aria-valuemin="0"
+                            aria-valuemax="<?= $valorMaximo ?>">
+                            <?= $emprestimosDevolvidos ?>
+                        </div>
+                    </div>
+                </li>
 
-        <div class="col-md-4 mb-4">
-            <div class="card border-start border-5 border-danger">
-                <div class="card-body text-center">
-                    <i class="fas fa-times-circle fa-2x mb-3" style="color: #dc3545;"></i>
-                    <h5 class="card-title">Empréstimos Não Devolvidos</h5>
-                    <h2 class="card-text"><?= $emprestimosNaoDevolvidos ?></h2>
-                </div>
-            </div>
+                <!-- Empréstimos Não Devolvidos -->
+                <li class="list-group-item">
+                    <strong>Empréstimos Não Devolvidos</strong>
+                    <div class="progress mt-2" style="height: 30px;">
+                        <div class="progress-bar" role="progressbar"
+                            style="width: <?= ($emprestimosNaoDevolvidos < 1 || (($emprestimosNaoDevolvidos / $valorMaximo) * 100) < 1) ? $emprestimosNaoDevolvidos : (($emprestimosNaoDevolvidos / $valorMaximo) * 100); ?>%; background-color: rgba(220, 53, 69, 0.6);"
+                            aria-valuenow="<?= $emprestimosNaoDevolvidos ?>" aria-valuemin="0"
+                            aria-valuemax="<?= $valorMaximo ?>">
+                            <?= $emprestimosNaoDevolvidos ?>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Novos Alunos -->
+                <li class="list-group-item">
+                    <strong>Total de Alunos</strong>
+                    <div class="progress mt-2" style="height: 30px;">
+                        <div class="progress-bar" role="progressbar"
+                            style="width: <?= ($novosAlunos < 1 || (($novosAlunos / $valorMaximo) * 100) < 1) ? $novosAlunos : (($novosAlunos / $valorMaximo) * 100); ?>%; background-color: rgba(0, 123, 255, 0.6);"
+                            aria-valuenow="<?= $novosAlunos ?>" aria-valuemin="0" aria-valuemax="<?= $valorMaximo ?>">
+                            <?= $novosAlunos ?>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Total de Autores -->
+                <li class="list-group-item">
+                    <strong>Total de Autores</strong>
+                    <div class="progress mt-2" style="height: 30px;">
+                        <div class="progress-bar" role="progressbar"
+                            style="width: <?= ($totalAutores < 1 || (($totalAutores / $valorMaximo) * 100) < 1) ? $totalAutores : (($totalAutores / $valorMaximo) * 100); ?>%; background-color: rgba(255, 193, 7, 0.6);"
+                            aria-valuenow="<?= $totalAutores ?>" aria-valuemin="0" aria-valuemax="<?= $valorMaximo ?>">
+                            <?= $totalAutores ?>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Total de Editoras -->
+                <li class="list-group-item">
+                    <strong>Total de Editoras</strong>
+                    <div class="progress mt-2" style="height: 30px;">
+                        <div class="progress-bar" role="progressbar"
+                            style="width: <?= ($totalEditoras < 1 || (($totalEditoras / $valorMaximo) * 100) < 1) ? $totalEditoras : (($totalEditoras / $valorMaximo) * 100); ?>%; background-color: rgba(108, 117, 125, 0.6);"
+                            aria-valuenow="<?= $totalEditoras ?>" aria-valuemin="0" aria-valuemax="<?= $valorMaximo ?>">
+                            <?= $totalEditoras ?>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-md-4 mb-4">
-            <div class="card border-start border-5 border-info">
-                <div class="card-body text-center">
-                    <i class="fas fa-user-graduate fa-2x mb-3" style="color: #17a2b8;"></i>
-                    <h5 class="card-title">Total de Alunos</h5>
-                    <h2 class="card-text"><?= $novosAlunos ?></h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card border-start border-5 border-warning">
-                <div class="card-body text-center">
-                    <i class="fas fa-user-edit fa-2x mb-3" style="color: #ffc107;"></i>
-                    <h5 class="card-title">Total de Autores</h5>
-                    <h2 class="card-text"><?= $totalAutores ?></h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card border-start border-5 border-secondary">
-                <div class="card-body text-center">
-                    <i class="fas fa-building fa-2x mb-3" style="color: #6c757d;"></i>
-                    <h5 class="card-title">Total de Editoras</h5>
-                    <h2 class="card-text"><?= $totalEditoras ?></h2>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Gráfico -->
     <div class="row mt-4">
@@ -94,7 +112,8 @@
     <!-- Botão para abrir o modal de cadastro de notícias -->
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastroNoticiaModal">Cadastrar Notícia</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastroNoticiaModal">Cadastrar
+                Notícia</button>
         </div>
     </div>
 
@@ -104,35 +123,40 @@
         <div class="carousel-inner text-center">
             <?php if (!empty($noticias)): // Verifica se existem notícias 
             ?>
-                <?php foreach ($noticias as $index => $noticia): ?>
-                    <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                        <div class="row justify-content-center">
-                            <div class="col-md-6">
-                                <div class="card mb-3">
-                                    <!-- Imagem da notícia -->
-                                    <img src="<?= base_url('uploads/noticias/' . $noticia['imagem']) ?>" class="card-img-top img-fluid" alt="Imagem da Notícia">
+            <?php foreach ($noticias as $index => $noticia): ?>
+            <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <!-- Imagem da notícia -->
+                            <img src="<?= base_url('uploads/noticias/' . $noticia['imagem']) ?>"
+                                class="card-img-top img-fluid" alt="Imagem da Notícia">
 
-                                    <!-- Corpo da notícia -->
-                                    <div class="card-body">
-                                        <!-- Título da notícia -->
-                                        <h5 class="card-title mb-3 text-center" style="font-size: 1.5rem; color: #555; font-weight: bold;"><?= $noticia['titulo'] ?></h5>
+                            <!-- Corpo da notícia -->
+                            <div class="card-body">
+                                <!-- Título da notícia -->
+                                <h5 class="card-title mb-3 text-center"
+                                    style="font-size: 1.5rem; color: #555; font-weight: bold;"><?= $noticia['titulo'] ?>
+                                </h5>
 
-                                        <!-- Descrição -->
-                                        <p class="card-text mb-4"><?= $noticia['descricao'] ?></p>
+                                <!-- Descrição -->
+                                <p class="card-text mb-4"><?= $noticia['descricao'] ?></p>
 
-                                        <!-- Botões centralizados -->
-                                        <div class="d-flex justify-content-center gap-3">
-                                            <a href="<?= $noticia['link'] ?>" class="btn btn-primary" target="_blank">Leia mais</a>
-                                            <a href="<?= base_url('Home/excluir_noticia/' . $noticia['id']) ?>" class="btn btn-danger">Excluir</a>
-                                        </div>
-                                    </div>
+                                <!-- Botões centralizados -->
+                                <div class="d-flex justify-content-center gap-3">
+                                    <a href="<?= $noticia['link'] ?>" class="btn btn-primary" target="_blank">Leia
+                                        mais</a>
+                                    <a href="<?= base_url('Home/excluir_noticia/' . $noticia['id']) ?>"
+                                        class="btn btn-danger">Excluir</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endforeach; ?>
             <?php else: ?>
-                <p class="text-center">Nenhuma notícia disponível no momento.</p>
+            <p class="text-center">Nenhuma notícia disponível no momento.</p>
             <?php endif; ?>
         </div>
 
@@ -148,7 +172,8 @@
     </div>
 
     <!-- Modal de Cadastro de Notícia -->
-    <div class="modal fade" id="cadastroNoticiaModal" tabindex="-1" aria-labelledby="cadastroNoticiaModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cadastroNoticiaModal" tabindex="-1" aria-labelledby="cadastroNoticiaModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -182,105 +207,105 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('meuGrafico').getContext('2d');
-        const meuGrafico = new Chart(ctx, {
-            type: 'bar', // ou 'line', 'pie', etc.
-            data: {
-                labels: ['Total de Alunos', 'Total de Autores', 'Total de Editoras', 'Livros Disponíveis',
-                    'Empréstimos Devolvidos', 'Empréstimos Não Devolvidos'
+    const ctx = document.getElementById('meuGrafico').getContext('2d');
+    const meuGrafico = new Chart(ctx, {
+        type: 'bar', // ou 'line', 'pie', etc.
+        data: {
+            labels: ['Total de Alunos', 'Total de Autores', 'Total de Editoras', 'Livros Disponíveis',
+                'Empréstimos Devolvidos', 'Empréstimos Não Devolvidos'
+            ],
+            datasets: [{
+                label: 'Estatísticas da Biblioteca',
+                data: [<?= $novosAlunos ?>, <?= $totalAutores ?>, <?= $totalEditoras ?>,
+                    <?= $livrosDisponiveis ?>,
+                    <?= $emprestimosDevolvidos ?>, <?= $emprestimosNaoDevolvidos ?>
                 ],
-                datasets: [{
-                    label: 'Estatísticas da Biblioteca',
-                    data: [<?= $novosAlunos ?>, <?= $totalAutores ?>, <?= $totalEditoras ?>,
-                        <?= $livrosDisponiveis ?>,
-                        <?= $emprestimosDevolvidos ?>, <?= $emprestimosNaoDevolvidos ?>
-                    ],
-                    backgroundColor: [
-                        'rgba(0, 123, 255, 0.6)', // Azul para Total de Alunos
-                        'rgba(255, 193, 7, 0.6)', // Amarelo para Total de Autores
-                        'rgba(108, 117, 125, 0.6)', // Cinza para Total de Editoras
-                        'rgba(0, 123, 255, 0.6)', // Azul para Livros Disponíveis
-                        'rgba(40, 167, 69, 0.6)', // Verde para Empréstimos Devolvidos
-                        'rgba(220, 53, 69, 0.6)' // Vermelho para Empréstimos Não Devolvidos
-                    ],
-                    borderColor: [
-                        'rgba(0, 123, 255, 1)', // Azul para Total de Alunos
-                        'rgba(255, 193, 7, 1)', // Amarelo para Total de Autores
-                        'rgba(108, 117, 125, 1)', // Cinza para Total de Editoras
-                        'rgba(0, 123, 255, 1)', // Azul para Livros Disponíveis
-                        'rgba(40, 167, 69, 1)', // Verde para Empréstimos Devolvidos
-                        'rgba(220, 53, 69, 1)' // Vermelho para Empréstimos Não Devolvidos
-                    ],
-                    rderWidth: 5,
-                    borderRadius: 10,
-                    barThickness: 60
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true, // Mantém a proporção
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.1)'
-                        },
-                        ticks: {
-                            color: '#666',
-                            font: {
-                                size: 12
-                            }
-                        }
+                backgroundColor: [
+                    'rgba(0, 123, 255, 0.6)', // Azul para Total de Alunos
+                    'rgba(255, 193, 7, 0.6)', // Amarelo para Total de Autores
+                    'rgba(108, 117, 125, 0.6)', // Cinza para Total de Editoras
+                    'rgba(0, 123, 255, 0.6)', // Azul para Livros Disponíveis
+                    'rgba(40, 167, 69, 0.6)', // Verde para Empréstimos Devolvidos
+                    'rgba(220, 53, 69, 0.6)' // Vermelho para Empréstimos Não Devolvidos
+                ],
+                borderColor: [
+                    'rgba(0, 123, 255, 1)', // Azul para Total de Alunos
+                    'rgba(255, 193, 7, 1)', // Amarelo para Total de Autores
+                    'rgba(108, 117, 125, 1)', // Cinza para Total de Editoras
+                    'rgba(0, 123, 255, 1)', // Azul para Livros Disponíveis
+                    'rgba(40, 167, 69, 1)', // Verde para Empréstimos Devolvidos
+                    'rgba(220, 53, 69, 1)' // Vermelho para Empréstimos Não Devolvidos
+                ],
+                rderWidth: 5,
+                borderRadius: 10,
+                barThickness: 60
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true, // Mantém a proporção
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
                     },
-                    x: {
-                        ticks: {
-                            color: '#666',
-                            autoSkip: false,
-                            autoSkip: false,
-                            maxRotation: 0, // Garante que o texto fique reto
-                            minRotation: 0
-                        },
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.1)'
+                    ticks: {
+                        color: '#666',
+                        font: {
+                            size: 12
                         }
                     }
                 },
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#333',
-                            font: {
-                                size: 12
-                            }
+                x: {
+                    ticks: {
+                        color: '#666',
+                        autoSkip: false,
+                        autoSkip: false,
+                        maxRotation: 0, // Garante que o texto fique reto
+                        minRotation: 0
+                    },
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#333',
+                        font: {
+                            size: 12
                         }
                     }
                 }
             }
-        });
+        }
+    });
     </script>
 
     <style>
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
         .card {
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            margin-bottom: 20px;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
+        canvas {
+            height: 250px;
         }
-
-        .row {
-            margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .card {
-                margin-bottom: 20px;
-            }
-
-            canvas {
-                height: 250px;
-            }
-        }
+    }
     </style>

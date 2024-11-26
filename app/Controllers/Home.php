@@ -32,31 +32,34 @@ class Home extends BaseController
     // Página inicial com estatísticas e notícias
     public function index()
     {
-        // Estatísticas
-        $livrosDisponiveis = $this->livroModel->countAllResults();
-        $emprestimosDevolvidos = $this->emprestimoModel->where('data_fim IS NOT NULL')->countAllResults();
-        $emprestimosNaoDevolvidos = $this->emprestimoModel->where('data_fim IS NULL')->countAllResults(); // Contagem de empréstimos não devolvidos
-        $novosAlunos = $this->alunoModel->countAllResults();
-        $totalAutores = $this->autorModel->countAllResults(); // Contagem total de autores
-        $totalEditoras = $this->editoraModel->countAllResults(); // Contagem total de editoras
+    // Estatísticas
+    $livrosDisponiveis = $this->livroModel->countAllResults();
+    $emprestimosDevolvidos = $this->emprestimoModel->where('data_fim IS NOT NULL')->countAllResults();
+    $emprestimosNaoDevolvidos = $this->emprestimoModel->where('data_fim IS NULL')->countAllResults();
+    $novosAlunos = $this->alunoModel->countAllResults();
+    $totalAutores = $this->autorModel->countAllResults();
+    $totalEditoras = $this->editoraModel->countAllResults();
 
-        // Notícias (substituindo por dados reais do banco de dados)
-        $noticias = $this->noticiaModel->findAll();
+    // Notícias
+    $noticias = $this->noticiaModel->findAll();
+    $valorMaximo = max($livrosDisponiveis, $emprestimosDevolvidos, $emprestimosNaoDevolvidos, $novosAlunos, $totalAutores, $totalEditoras); 
 
-        // Carregar as views e passar os dados para a view 'home/index.php'
-        echo view('_partials/header');
-        echo view('_partials/navbar');
-        echo view('home/index.php', [
-            'livrosDisponiveis' => $livrosDisponiveis,
-            'emprestimosDevolvidos' => $emprestimosDevolvidos,
-            'emprestimosNaoDevolvidos' => $emprestimosNaoDevolvidos, // Passando a contagem de empréstimos não devolvidos
-            'novosAlunos' => $novosAlunos,
-            'noticias' => $noticias,
-            'totalAutores' => $totalAutores, // Passando a contagem de autores
-            'totalEditoras' => $totalEditoras // Passando a contagem de editoras
-        ]);
-        echo view('_partials/footer');
+    // Passando os dados para a view
+    echo view('_partials/header');
+    echo view('_partials/navbar');
+    echo view('home/index.php', [
+        'livrosDisponiveis' => $livrosDisponiveis,
+        'emprestimosDevolvidos' => $emprestimosDevolvidos,
+        'emprestimosNaoDevolvidos' => $emprestimosNaoDevolvidos,
+        'novosAlunos' => $novosAlunos,
+        'noticias' => $noticias,
+        'totalAutores' => $totalAutores,
+        'totalEditoras' => $totalEditoras,
+        'valorMaximo' => $valorMaximo
+    ]);
+    echo view('_partials/footer');
     }
+
 
     // Salvar a notícia no banco de dados
     public function salvar_noticia()
