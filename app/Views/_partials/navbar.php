@@ -239,7 +239,7 @@
             </div>
 
             <script src="<?=base_url('assets/jquery/preview.js')?>"></script>
-            <script src="<?=base_url('assets/jquery/barradenavegação.js')?>"></script>
+            <script src="<?=base_url('assets/jquery/barradenavegacao.js')?>"></script>
             <div id="preloader">
                 <div class="loading-bar">
                     <div class="line"></div>
