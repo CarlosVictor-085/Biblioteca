@@ -149,7 +149,7 @@ class Emprestimo extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao cadastrar o empréstimo.');
         }
-        return redirect()->to('emprestimo/index');
+        return redirect()->to('emprestimo');
     }
 
     public function salvar()
@@ -163,7 +163,7 @@ class Emprestimo extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao atualizar o empréstimo.');
         }
-        return redirect()->to('emprestimo/index');
+        return redirect()->to('emprestimo');
     }
 
     public function salvardev()
@@ -177,7 +177,7 @@ class Emprestimo extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao registrar a devolução.');
         }
-        return redirect()->to('emprestimo/index');
+        return redirect()->to('emprestimo');
     }
 
     public function excluir()
@@ -196,7 +196,7 @@ class Emprestimo extends BaseController
         } else {
             session()->setFlashdata('error', 'ID do empréstimo não fornecido.');
         }
-        return redirect()->to('Emprestimo/index');
+        return redirect()->to('Emprestimo');
     }
 
     public function relatorioPendencias()

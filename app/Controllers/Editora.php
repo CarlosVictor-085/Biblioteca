@@ -41,7 +41,7 @@ class Editora extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao cadastrar a editora.');
         }
-        return redirect()->to('Editora/index');
+        return redirect()->to('Editora');
     }
     
     public function salvar()
@@ -53,7 +53,7 @@ class Editora extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao atualizar a editora.');
         }
-        return redirect()->to('Editora/index');
+        return redirect()->to('Editora');
     }
 
     public function excluir()
@@ -65,7 +65,7 @@ class Editora extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao excluir a editora.');
         }
-        return redirect()->to('Editora/index');
+        return redirect()->to('Editora');
     }
 
 }

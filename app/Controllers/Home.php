@@ -32,32 +32,32 @@ class Home extends BaseController
     // Página inicial com estatísticas e notícias
     public function index()
     {
-    // Estatísticas
-    $livrosDisponiveis = $this->livroModel->countAllResults();
-    $emprestimosDevolvidos = $this->emprestimoModel->where('data_fim IS NOT NULL')->countAllResults();
-    $emprestimosNaoDevolvidos = $this->emprestimoModel->where('data_fim IS NULL')->countAllResults();
-    $novosAlunos = $this->alunoModel->countAllResults();
-    $totalAutores = $this->autorModel->countAllResults();
-    $totalEditoras = $this->editoraModel->countAllResults();
+        // Estatísticas
+        $livrosDisponiveis = $this->livroModel->countAllResults();
+        $emprestimosDevolvidos = $this->emprestimoModel->where('data_fim IS NOT NULL')->countAllResults();
+        $emprestimosNaoDevolvidos = $this->emprestimoModel->where('data_fim IS NULL')->countAllResults();
+        $novosAlunos = $this->alunoModel->countAllResults();
+        $totalAutores = $this->autorModel->countAllResults();
+        $totalEditoras = $this->editoraModel->countAllResults();
 
-    // Notícias
-    $noticias = $this->noticiaModel->findAll();
-    $valorMaximo = max($livrosDisponiveis, $emprestimosDevolvidos, $emprestimosNaoDevolvidos, $novosAlunos, $totalAutores, $totalEditoras); 
+        // Notícias
+        $noticias = $this->noticiaModel->findAll();
+        $valorMaximo = max($livrosDisponiveis, $emprestimosDevolvidos, $emprestimosNaoDevolvidos, $novosAlunos, $totalAutores, $totalEditoras); 
 
-    // Passando os dados para a view
-    echo view('_partials/header');
-    echo view('_partials/navbar');
-    echo view('home/index.php', [
-        'livrosDisponiveis' => $livrosDisponiveis,
-        'emprestimosDevolvidos' => $emprestimosDevolvidos,
-        'emprestimosNaoDevolvidos' => $emprestimosNaoDevolvidos,
-        'novosAlunos' => $novosAlunos,
-        'noticias' => $noticias,
-        'totalAutores' => $totalAutores,
-        'totalEditoras' => $totalEditoras,
-        'valorMaximo' => $valorMaximo
-    ]);
-    echo view('_partials/footer');
+        // Passando os dados para a view
+        echo view('_partials/header');
+        echo view('_partials/navbar');
+        echo view('home/index.php', [
+            'livrosDisponiveis' => $livrosDisponiveis,
+            'emprestimosDevolvidos' => $emprestimosDevolvidos,
+            'emprestimosNaoDevolvidos' => $emprestimosNaoDevolvidos,
+            'novosAlunos' => $novosAlunos,
+            'noticias' => $noticias,
+            'totalAutores' => $totalAutores,
+            'totalEditoras' => $totalEditoras,
+            'valorMaximo' => $valorMaximo
+        ]);
+        echo view('_partials/footer');
     }
 
 

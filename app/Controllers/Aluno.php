@@ -28,17 +28,7 @@ class Aluno extends BaseController
         echo view('_partials/footer');
     }
 
-    public function cadastrar()
-    {
-        $aluno = $this->request->getPost();
-        if ($this->alunoModel->save($aluno)) {
-            session()->setFlashdata('success', 'Aluno cadastrado com sucesso.');
-        } else {
-            session()->setFlashdata('error', 'Erro ao cadastrar aluno.');
-        }
-        return redirect()->to('Aluno/index');
-    }
-
+    
     public function editar($id)
     {
         $turma = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D', '3A', '3B', '3C', '3D'];
@@ -47,6 +37,17 @@ class Aluno extends BaseController
         echo view('_partials/navbar');
         echo view('aluno/edit', ['aluno' => $aluno,'turma' => $turma]);
         echo view('_partials/footer');
+    }
+    
+    public function cadastrar()
+    {
+        $aluno = $this->request->getPost();
+        if ($this->alunoModel->save($aluno)) {
+            session()->setFlashdata('success', 'Aluno cadastrado com sucesso.');
+        } else {
+            session()->setFlashdata('error', 'Erro ao cadastrar aluno.');
+        }
+        return redirect()->to('Aluno');
     }
 
     public function salvar()
@@ -57,7 +58,7 @@ class Aluno extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao atualizar aluno.');
         }
-        return redirect()->to('Aluno/index');
+        return redirect()->to('Aluno');
     }
 
     public function excluir()
@@ -68,7 +69,7 @@ class Aluno extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao excluir aluno. Pode ser que haja restrições de chave estrangeira.');
         }
-        return redirect()->to('Aluno/index');
+        return redirect()->to('Aluno');
     }
 
     public function gerarRelatorioPDF($id)

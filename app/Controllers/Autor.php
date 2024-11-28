@@ -30,7 +30,6 @@ class Autor extends BaseController
         echo view('_partials/navbar');
         echo view('autor/edit',['autor' => $autor]);
         echo view('_partials/footer');
-
     }
 
     public function cadastrar()
@@ -42,7 +41,7 @@ class Autor extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao cadastrar o autor.');
         }
-        return redirect()->to('Autor/index');
+        return redirect()->to('Autor');
     }
 
     public function salvar()
@@ -54,7 +53,7 @@ class Autor extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao atualizar o autor.');
         }
-        return redirect()->to('Autor/index');
+        return redirect()->to('Autor');
     }
 
     public function excluir()
@@ -66,7 +65,7 @@ class Autor extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao excluir o autor.');
         }
-        return redirect()->to('Autor/index');
+        return redirect()->to('Autor');
     }
 
 }

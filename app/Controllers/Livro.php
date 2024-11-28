@@ -77,7 +77,7 @@ class Livro extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao cadastrar o livro.');
         }
-        return redirect()->to('Livro/index');
+        return redirect()->to('Livro');
     }
 
     public function salvar()
@@ -89,7 +89,7 @@ class Livro extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao atualizar o livro.');
         }
-        return redirect()->to('Livro/index');
+        return redirect()->to('Livro');
     }
 
     public function excluir()
@@ -101,7 +101,7 @@ class Livro extends BaseController
         } else {
             session()->setFlashdata('error', 'Erro ao excluir o livro.');
         }
-        return redirect()->to('Livro/index');
+        return redirect()->to('Livro');
     }
 
     public function relatorioLivrosPerdidos()
