@@ -103,6 +103,8 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#chatModal">Iniciar
+                            Chat</button>
                         <!-- User -->
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
@@ -221,13 +223,6 @@
                                 aria-label="Fechar"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="mb-3 col-12 mb-0">
-                                <div class="alert alert-warning">
-                                    <h6 class="alert-heading fw-bold mb-1">
-                                        "Você fará login novamente."
-                                    </h6>
-                                </div>
-                            </div>
                             <?= form_open(base_url('Usuario/alterarFoto/' . session()->get('id')), ['method' => 'post', 'enctype' => 'multipart/form-data']) ?>
                             <?= csrf_field() ?>
                             <div class="mb-3">
@@ -245,6 +240,65 @@
                 </div>
             </div>
 
+            <!-- Modal -->
+            <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="chatModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="chatModalLabel">Chatbot</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Caixa de chat -->
+                            <div id="chat-box"></div>
+                            <textarea id="user-input" class="form-control" rows="3"
+                                placeholder="Digite sua mensagem..."></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="button" class="btn btn-primary" onclick="sendMessage()">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+            function appendMessage(content, sender) {
+                let chatBox = document.getElementById('chat-box');
+                chatBox.innerHTML += `<div class="chat-message"><strong>${sender}:</strong> ${content}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+            function sendMessage() {
+                let message = document.getElementById('user-input').value;
+                if (message.trim() === "") return;
+
+                appendMessage(message, "Você");
+
+                fetch('/chatbot/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'message=' + encodeURIComponent(message)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.choices && data.choices.length > 0) {
+                            appendMessage(data.choices[0].message.content, "Bot");
+                        } else {
+                            appendMessage('Erro ao obter resposta.', "Bot");
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error:', err);
+                        appendMessage('Erro ao se conectar ao chatbot.', "Bot");
+                    });
+            }
+            </script>
             <script src="<?=base_url('assets/jquery/preview.js')?>"></script>
             <script src="<?=base_url('assets/jquery/barradenavegacao.js')?>"></script>
             <div id="preloader">

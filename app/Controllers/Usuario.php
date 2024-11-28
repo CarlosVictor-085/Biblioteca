@@ -180,6 +180,7 @@ class Usuario extends BaseController
                     ];
 
                     if ($this->usuarioModel->save($usuarioData)) {
+                        session()->set('foto', $newName);
                         session()->setFlashdata('success', 'Foto alterada com sucesso!');
                     } else {
                         session()->setFlashdata('error', 'Erro ao alterar a foto.');
@@ -192,7 +193,7 @@ class Usuario extends BaseController
             }
 
             // Redirecionar para a página de perfil ou a URL desejada
-            return redirect()->to(base_url('Login/logout'));  // Ajuste para a URL do perfil do usuário
+            return redirect()->to((previous_url()));  // Ajuste para a URL do perfil do usuário
         }
         // Se não for uma requisição POST, apenas exibir a página com o formulário
     }
