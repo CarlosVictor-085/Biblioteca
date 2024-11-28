@@ -221,6 +221,13 @@
                                 aria-label="Fechar"></button>
                         </div>
                         <div class="modal-body">
+                            <div class="mb-3 col-12 mb-0">
+                                <div class="alert alert-warning">
+                                    <h6 class="alert-heading fw-bold mb-1">
+                                        "Você fará login novamente."
+                                    </h6>
+                                </div>
+                            </div>
                             <?= form_open(base_url('Usuario/alterarFoto/' . session()->get('id')), ['method' => 'post', 'enctype' => 'multipart/form-data']) ?>
                             <?= csrf_field() ?>
                             <div class="mb-3">
