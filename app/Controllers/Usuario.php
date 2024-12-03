@@ -21,6 +21,9 @@ class Usuario extends BaseController
     public function index()
     {
         $tipousuario = UsuarioModel::TIPOUSUARIO;
+        if (session()->get('tipo_usuario') != 'Administrador') {
+           $dados = $this->usuarioModel->find(session()->get('id'));
+        }
         $dados = $this->usuarioModel->findAll();
         echo view('_partials/header');
         echo view('_partials/navbar');
