@@ -46,9 +46,9 @@
                     <select class='form-select' name="id_editora" id="id_editora" required>
                         <option value="<?= $obra['id_editora'] ?>" hidden><?= $obra['nome'] ?></option>
                         <?php foreach ($editora as $ed) : ?>
-                            <option value="<?= $ed['id'] ?>" <?= ($ed['id'] == $obra['id_editora']) ? 'selected' : '' ?>>
-                                <?= $ed['nome'] ?>
-                            </option>
+                        <option value="<?= $ed['id'] ?>" <?= ($ed['id'] == $obra['id_editora']) ? 'selected' : '' ?>>
+                            <?= $ed['nome'] ?>
+                        </option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -77,24 +77,24 @@
                         <div class="card-body">
                             <h5 class="card-title">Autores da Obra</h5>
                             <?php if (!empty($listaAutorObra)): ?>
-                                <?php foreach ($listaAutorObra as $lao): ?>
-                                    <?php if ($lao['id_obra'] == $obra['obra_id']): // Verifica se o id_obra corresponde 
+                            <?php foreach ($listaAutorObra as $lao): ?>
+                            <?php if ($lao['id_obra'] == $obra['obra_id']): // Verifica se o id_obra corresponde 
                                     ?>
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <div><?= htmlspecialchars($autor[$lao['id_autor']]) ?></div>
-                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                                data-bs-target="#confirmDeleteModal" data-id="<?= $lao['id'] ?>">
-                                                Excluir
-                                            </button>
-                                        </div>
-                                    <?php else: ?>
-                                        <div id="noAuthorMessage" style="display: none;">
-                                            <p>Nenhum autor encontrado para esta obra.</p>
-                                        </div>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div><?= htmlspecialchars($autor[$lao['id_autor']]) ?></div>
+                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                    data-bs-target="#confirmDeleteModal" data-id="<?= $lao['id'] ?>">
+                                    Excluir
+                                </button>
+                            </div>
                             <?php else: ?>
+                            <div id="noAuthorMessage" style="display: none;">
                                 <p>Nenhum autor encontrado para esta obra.</p>
+                            </div>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                            <p>Nenhum autor encontrado para esta obra.</p>
                             <?php endif; ?> <div class="mt-3">
                                 <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
@@ -164,7 +164,7 @@
                     <select class='form-select' name="id_autor" id="id_autor" required>
                         <option>Selecione</option>
                         <?php foreach ($listaAutor as $autor) : ?>
-                            <option value="<?= $autor['id'] ?>"><?= $autor['nome'] ?></option>
+                        <option value="<?= $autor['id'] ?>"><?= $autor['nome'] ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -204,229 +204,117 @@
 </div>
 
 <script>
-    // Passa a quantidade de livros existentes e tombos existentes do PHP para o JavaScript
-    var livrosExistentes = <?= isset($quantidadeExistente) ? $quantidadeExistente : 0 ?>;
-    var tombosExistentes = <?= json_encode($tombosExistentes) ?>; // Se você também tem os tombos existentes
-    document.addEventListener('DOMContentLoaded', function() {
-        var quantidadeInput = document.getElementById('quantidade');
+// Passa a quantidade de livros existentes e tombos existentes do PHP para o JavaScript
+var livrosExistentes = <?= isset($quantidadeExistente) ? $quantidadeExistente : 0 ?>;
+var tombosExistentes = <?= json_encode($tombosExistentes) ?>; // Se você também tem os tombos existentes
 
-        var container = document.getElementById('tomboContainer');
+document.addEventListener('DOMContentLoaded', function() {
+    var quantidadeInput = document.getElementById('quantidade');
+    var container = document.getElementById('tomboContainer');
 
+    if (quantidadeInput) {
+        quantidadeInput.addEventListener('input', function() {
+            var quantidadeTotal = parseInt(this.value);
+            var quantidadeFaltante = quantidadeTotal -
+                livrosExistentes; // livrosExistentes agora está definido
 
+            // Limpa os campos de tombo anteriores
+            container.innerHTML = '';
 
-        if (quantidadeInput) {
+            if (!isNaN(quantidadeFaltante) && quantidadeFaltante > 0) {
+                for (var i = 0; i < quantidadeFaltante; i++) {
+                    // Cria o div row p-2 fora do container principal
+                    var rowDiv = document.createElement('div');
+                    rowDiv.className = 'row p-2';
 
-            quantidadeInput.addEventListener('input', function() {
+                    // Cria o label para o campo de tombo
+                    var labelDiv = document.createElement('div');
+                    labelDiv.className = 'col-2';
+                    var label = document.createElement('label');
+                    label.className = 'form-label';
+                    label.setAttribute('for', 'tombo' + (i +
+                        1)); // Corrige a indexação para começar do 1
+                    label.innerHTML = 'Tombamento ' + (i + 1 + livrosExistentes) +
+                        ':'; // Soma com os livros existentes
+                    labelDiv.appendChild(label);
 
-                var quantidadeTotal = parseInt(this.value);
+                    // Cria o input para o tombo
+                    var inputDiv = document.createElement('div');
+                    inputDiv.className = 'col-10';
+                    var input = document.createElement('input');
+                    input.className = 'form-control';
+                    input.type = 'text';
+                    input.name = 'tombo[]';
+                    input.id = 'tombo' + (i + 1);
 
-                var quantidadeFaltante = quantidadeTotal -
+                    // Adiciona o evento de input para verificar duplicatas
+                    input.addEventListener('input', verificarDuplicatas);
 
-                    livrosExistentes; // livrosExistentes agora está definido
+                    inputDiv.appendChild(input);
 
+                    // Adiciona o label e o input ao div row
+                    rowDiv.appendChild(labelDiv);
+                    rowDiv.appendChild(inputDiv);
 
-
-                // Limpa os campos de tombo anteriores
-
-                container.innerHTML = '';
-
-
-
-                if (!isNaN(quantidadeFaltante) && quantidadeFaltante > 0) {
-
-                    for (var i = 1; i <= quantidadeFaltante; i++) {
-
-                        // Cria o div row p-2 fora do container principal
-
-                        var rowDiv = document.createElement('div');
-
-                        rowDiv.className = 'row p-2';
-
-
-
-                        // Cria o label para o campo de tombo
-
-                        var labelDiv = document.createElement('div');
-
-                        labelDiv.className = 'col-2';
-
-
-
-                        var label = document.createElement('label');
-
-                        label.className = 'form-label';
-
-                        label.setAttribute('for', 'tombo' + i);
-
-                        label.innerHTML = 'Tombamento ' + (i + livrosExistentes) + ':';
-
-
-
-                        labelDiv.appendChild(label);
-
-
-
-                        // Cria o input para o tombo
-
-                        var inputDiv = document.createElement('div');
-
-                        inputDiv.className = 'col-10';
-
-
-
-                        var input = document.createElement('input');
-
-                        input.className = 'form-control';
-
-                        input.type = 'text';
-
-                        input.name = 'tombo[]';
-
-                        input.id = 'tombo' + i;
-
-
-
-                        // Adiciona o evento de input para verificar duplicatas
-
-                        input.addEventListener('input', verificarDuplicatas);
-
-
-
-                        inputDiv.appendChild(input);
-
-
-
-                        // Adiciona o label e o input ao div row
-
-                        rowDiv.appendChild(labelDiv);
-
-                        rowDiv.appendChild(inputDiv);
-
-
-
-                        // Adiciona o rowDiv ao container principal
-
-                        container.appendChild(rowDiv);
-
-                    }
-
+                    // Adiciona o rowDiv ao container principal
+                    container.appendChild(rowDiv);
                 }
-
-            });
-
-        } else {
-
-            console.error('Elemento #quantidade não encontrado.');
-
-        }
-
-
-
-        // Função para verificar duplicatas de tombamento
-
-        function verificarDuplicatas() {
-
-            var tombos = document.querySelectorAll("input[name='tombo[]']");
-
-            var valoresDigitados = [];
-
-            var hasDuplicate = false;
-
-
-
-            tombos.forEach(function(tombo) {
-
-                var valor = tombo.value.trim();
-
-
-
-                // Verifica se o valor é duplicado ou já existe no banco
-
-                if (valor !== '' && (valoresDigitados.includes(valor) || tombosExistentes
-
-                        .includes(
-
-                            valor))) {
-
-                    tombo.classList.add('is-invalid'); // Destaca o campo com duplicata
-
-                    hasDuplicate = true;
-
-                } else {
-
-                    tombo.classList.remove(
-
-                        'is-invalid'); // Remove o destaque se não for duplicata
-
-                    valoresDigitados.push(
-
-                        valor); // Adiciona o valor ao array de valores digitados
-
-                }
-
-            });
-
-
-
-            // Desabilita o botão de envio se houver duplicatas
-
-            var submitButton = document.querySelector("button[type='submit']");
-
-            if (submitButton) {
-
-                submitButton.disabled = hasDuplicate;
-
-            } else {
-
-                console.error('Botão de envio não encontrado.');
-
             }
+        });
+    } else {
+        console.error('Elemento #quantidade não encontrado.');
+    }
 
+    // Função para verificar duplicatas de tombamento
+    function verificarDuplicatas() {
+        var tombos = document.querySelectorAll("input[name='tombo[]']");
+        var valoresDigitados = [];
+        var hasDuplicate = false;
+
+        tombos.forEach(function(tombo) {
+            var valor = tombo.value.trim();
+
+            // Verifica se o valor é duplicado ou já existe no banco
+            if (valor !== '' && (valoresDigitados.includes(valor) || tombosExistentes.includes(
+                    valor))) {
+                tombo.classList.add('is-invalid'); // Destaca o campo com duplicata
+                hasDuplicate = true;
+            } else {
+                tombo.classList.remove('is-invalid'); // Remove o destaque se não for duplicata
+                valoresDigitados.push(valor); // Adiciona o valor ao array de valores digitados
+            }
+        });
+
+        // Desabilita o botão de envio se houver duplicatas
+        var submitButton = document.querySelector("button[type='submit']");
+        if (submitButton) {
+            submitButton.disabled = hasDuplicate;
+        } else {
+            console.error('Botão de envio não encontrado.');
         }
+    }
 
-
-
-        // Debugging - Verificando os valores passados pelo PHP
-
-        console.log('Tombos Existentes:', tombosExistentes);
-
-        console.log('Quantidade Existente:', livrosExistentes);
-
-    });
+    // Debugging - Verificando os valores passados pelo PHP
+    console.log('Tombos Existentes:', tombosExistentes);
+    console.log('Quantidade Existente:', livrosExistentes);
+});
 </script>
-
 <script>
-    // Script para passar o ID genérico para o formulário de exclusão
-
-    const confirmDeleteModal = document.getElementById('confirmDeleteModal');
-
-    confirmDeleteModal.addEventListener('show.bs.modal', event => {
-
-        const button = event.relatedTarget; // Botão que acionou o modal
-
-        const id = button.getAttribute('data-id'); // Extrai o ID (genérico)
-
-        const deleteId = document.getElementById('deleteId'); // Campo oculto no modal
-
-        deleteId.value = id; // Define o valor do ID genérico
-
-    });
+// Script para passar o ID genérico para o formulário de exclusão
+const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+confirmDeleteModal.addEventListener('show.bs.modal', event => {
+    const button = event.relatedTarget; // Botão que acionou o modal
+    const id = button.getAttribute('data-id'); // Extrai o ID (genérico)
+    const deleteId = document.getElementById('deleteId'); // Campo oculto no modal
+    deleteId.value = id; // Define o valor do ID genérico
+});
 </script>
-
 <script>
-    $(document).ready(function() {
-
-        // Verifica se há algum autor
-
-        var hasAuthors = <?= json_encode(isset($lao['id_obra']) && $lao['id_obra'] == $obra['obra_id']) ?>;
-
-
-
-        if (!hasAuthors) {
-
-            $('#noAuthorMessage').show(); // Mostra a mensagem se não houver autores
-
-        }
-
-    });
+$(document).ready(function() {
+    // Verifica se há algum autor
+    var hasAuthors = <?= json_encode(isset($lao['id_obra']) && $lao['id_obra'] == $obra['obra_id']) ?>;
+    if (!hasAuthors) {
+        $('#noAuthorMessage').show(); // Mostra a mensagem se não houver autores
+    }
+});
 </script>

@@ -119,20 +119,20 @@
 </div>
 
 <?php
-// Mapeia os autores por ID
-$autor = [];
-foreach ($listaAutor as $a) {
-    $autor[$a['id']] = $a['nome'];
-}
-// Mapeia os autores da obra
-$autoresObra = [];
-foreach ($listaAutorObra as $lao) {
-    $autoresObra[] = [
-        'id_autor' => $lao['id_autor'],
-        'id_obra' => $lao['id_obra'],
-        'id' => $lao['id'] // Presumindo que há um campo 'id' em autor_obra
-    ];
-}
+    // Mapeia os autores por ID
+    $autor = [];
+    foreach ($listaAutor as $a) {
+        $autor[$a['id']] = $a['nome'];
+    }
+    // Mapeia os autores da obra
+    $autoresObra = [];
+    foreach ($listaAutorObra as $lao) {
+        $autoresObra[] = [
+            'id_autor' => $lao['id_autor'],
+            'id_obra' => $lao['id_obra'],
+            'id' => $lao['id'] // Presumindo que há um campo 'id' em autor_obra
+        ];
+    }
 ?>
 
 <!-- Modal para exibir os autores -->
@@ -182,282 +182,75 @@ foreach ($listaAutorObra as $lao) {
 
 <script>
 function setModalData(id) {
-
     // Define o ID da obra no campo escondido
-
     document.getElementById('obraId').value = id;
-
-
-
     // Atualiza a lista de autores no modal
-
     const listaAutoresModal = document.getElementById('listaAutoresModal');
-
     listaAutoresModal.innerHTML = ''; // Limpa a lista antes de adicionar novos itens
-
-
-
     // Filtra e exibe os autores com base no ID da obra
-
     const autores = <?= json_encode($autoresObra) ?>; // Converte PHP para JavaScript
-
     const autorNome = <?= json_encode($autor) ?>; // Converte o mapeamento de autores para JavaScript
-
-
-
     // Filtra os autores que pertencem à obra com o ID fornecido
-
     let autoresEncontrados = autores.filter(lao => lao.id_obra == id);
-
-
-
     if (autoresEncontrados.length > 0) {
-
         autoresEncontrados.forEach(lao => {
-
             const div = document.createElement('div');
-
             div.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-2');
-
             div.innerHTML = `
-
                 <div>${autorNome[lao.id_autor]}</div>
-
             `;
-
             listaAutoresModal.appendChild(div);
-
         });
-
     } else {
-
         listaAutoresModal.innerHTML = '<p>Nenhum autor encontrado para esta obra.</p>';
-
     }
-
 }
-
 // Adiciona um listener ao modal para definir os autores quando ele for aberto
 $('#modalAutores').on('show.bs.modal', function(event) {
-
     const button = $(event.relatedTarget); // Botão que abriu o modal
-
     const id = button.data('id'); // Extraí o ID da obra do botão
-
     setModalData(id); // Define os dados do modal
-
 });
 </script>
 
-<script>
-document.getElementById('quantidade').addEventListener('input', function() {
-
-    // Limitar a quantidade a um máximo de 100
-
-    if (this.value > 100) {
-
-        this.value = 100; // Define o valor máximo como 100
-
-    }
-
-
-
-    var quantidade = parseInt(this.value);
-
-    var container = document.getElementById('tomboContainer');
-
-    container.innerHTML = ''; // Limpa qualquer campo de tombo previamente adicionado
-
-
-
-    if (!isNaN(quantidade) && quantidade > 0) {
-
-        for (var i = 1; i <= quantidade; i++) {
-
-            // Cria o rótulo do campo
-
-            var label = document.createElement('label');
-
-            label.className = 'form-label';
-
-            label.setAttribute('for', 'tombo' + i);
-
-            label.innerHTML = 'Tombamento ' + i + ':';
-
-
-
-            // Cria o campo de input para o tombamento
-
-            var input = document.createElement('input');
-
-            input.className = 'form-control';
-
-            input.type = 'text';
-
-            input.name = 'tombo[]'; // Armazena os valores como um array
-
-            input.id = 'tombo' + i;
-
-
-
-            // Adiciona um evento de input para verificar duplicatas enquanto o usuário digita
-
-            input.addEventListener('input', verificarDuplicatas);
-
-
-
-            // Adiciona o campo de input ao container
-
-            container.appendChild(label);
-
-            container.appendChild(input);
-
-        }
-
-    }
-
-});
-
-// Função para verificar duplicatas de tombamento
-function verificarDuplicatas() {
-
-    var tombos = document.querySelectorAll("input[name='tombo[]']");
-
-    var valores = [];
-
-    var hasDuplicate = false;
-
-
-
-    tombos.forEach(function(tombo) {
-
-        var valor = tombo.value.trim();
-
-
-
-        if (valor !== '' && valores.includes(valor)) {
-
-            tombo.classList.add('is-invalid'); // Destaca o campo com duplicata
-
-            hasDuplicate = true;
-
-        } else {
-
-            tombo.classList.remove('is-invalid'); // Remove o destaque se não for duplicata
-
-            valores.push(valor);
-
-        }
-
-    });
-
-
-
-    // Desabilita o botão de envio se houver duplicatas
-
-    var submitButton = document.querySelector("button[type='submit']");
-
-    submitButton.disabled = hasDuplicate;
-
-}
-</script>
+<script src="<?=base_url('assets/jquery/obratombo.js')?>"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-
-
-
-    // Adiciona o required a todos os inputs e selects da classe 'form-control'
-
-    var inputsAndSelects = document.querySelectorAll('.form-control, .form-select');
-
-    inputsAndSelects.forEach(function(element) {
-
-        element.setAttribute('required', 'required');
-
-    });
-
-});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-
     var confirmModal = document.getElementById('confirmModal');
-
     var confirmDeleteButton = document.getElementById('confirmDelete');
-
-
-
     confirmModal.addEventListener('show.bs.modal', function(event) {
-
         // Link do botão que abriu o modal
-
         var button = event.relatedTarget;
-
         var url = button.getAttribute('data-url'); // Pega o URL do botão
-
-
-
         // Atualiza o link de exclusão no botão do modal
-
         confirmDeleteButton.setAttribute('href', url);
-
     });
-
 });
 </script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-
     // Função para abrir o modal de confirmação e passar o ID do aluno
-
     function confirmarExclusao(id) {
-
         // Atribui o ID ao campo oculto do formulário
-
         document.getElementById('alunoId').value = id;
-
-
-
         // Exibir o modal de confirmação
-
         var confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'), {});
-
         confirmDeleteModal.show();
-
-
-
         // Quando o usuário confirmar a exclusão
-
         document.getElementById('confirmDeleteBtn').onclick = function() {
-
             // Submete o formulário para excluir
-
             document.getElementById('formExcluir').submit();
-
         };
-
     }
-
-
-
     // Listener para cliques nos links de exclusão
-
     document.querySelectorAll('.delete-link').forEach(link => {
-
         link.addEventListener('click', function(e) {
-
             e.preventDefault(); // Prevenir o comportamento padrão
-
             const alunoId = this.getAttribute('data-id'); // Pega o ID do aluno
-
             confirmarExclusao(alunoId); // Chama a função de confirmação
-
         });
-
     });
-
 });
 </script>
