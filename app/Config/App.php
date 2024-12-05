@@ -140,7 +140,7 @@ class App extends BaseConfig
 
      */
 
-    public string $defaultLocale = 'pt';
+    public string $defaultLocale = 'pt-BR';
 
 
 
